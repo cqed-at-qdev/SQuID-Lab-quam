@@ -1,4 +1,8 @@
+from typing import Literal
 from quam.core import QuamComponent, quam_dataclass
+
+
+FRIDGES = ["meso", "archi", "T5", "T3", "T2"]
 
 
 @quam_dataclass
@@ -8,7 +12,7 @@ class Information(QuamComponent):
     user_name: str = None
     user_ku_tag: str = None
     device_name: str = None
-    fridge_name: str = None
+    fridge_name: Literal["meso", "archi", "T5", "T3", "T2"] = None
     data_path: str = None
     state_path: str = None
 

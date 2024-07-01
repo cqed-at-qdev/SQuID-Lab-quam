@@ -13,31 +13,35 @@ from squid_lab_quam.components.qubits import Transmon
 from squid_lab_quam.components.wiring import OPXWiring
 
 
+__all__ = ["QuAMSCQ1"]
+
+
 @quam_dataclass
-class QuAM(QuamRoot):
-    """"""
+class QuAMSCQ1(QuamRoot):
+    """SQuID Lab QuAM root type 1 for superconducting qubits."""
 
     @classmethod
-    def load(cls, *args, **kwargs) -> "QuAM":
+    def load(cls, *args, **kwargs) -> "QuAMSCQ1":
         return super().load(*args, **kwargs)
 
-    octave: OctaveSQuID = None
-
+    wiring: OPXWiring = field(default_factory=OPXWiring)
+    network: OPXNetwork = field(default_factory=OPXNetwork)
+    information: Information = field(default_factory=Information)
     qubits: Dict[str, Transmon] = field(default_factory=dict)
     shared_qubit_parameters: dict = field(default_factory=dict)
-    wiring: dict = field(default_factory=OPXWiring)
-    network: OPXNetwork = field(default_factory=OPXNetwork)
+    octaves: Dict[str, OctaveSQuID] = field(default_factory=dict)
+
+    # TODO: hide these attributes in hinting
     _qm: QuantumMachine = None
     _qmm: QuantumMachinesManager = None
     _config: dict = None
-    information: Information = field(default_factory=Information)
 
     @property
     def initial_quam(self):
         if hasattr(self, "_initial_quam"):
             return self._initial_quam
         else:
-            self._initial_quam = QuAM.load(self.information.state_path)
+            self._initial_quam = self.load(self.information.state_path)
             return self._initial_quam
 
     @property
@@ -118,3 +122,4 @@ class QuAM(QuamRoot):
         Returns:
             QuAM: An empty QuAM object.
         """
+        raise NotImplementedError

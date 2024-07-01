@@ -8,6 +8,7 @@ from quam.core import QuamComponent, quam_dataclass
 class OctaveNetwork(QuamComponent):
     octave_host: str = ""
     octave_port: int = 80
+    controller: str = ""
 
 
 @quam_dataclass

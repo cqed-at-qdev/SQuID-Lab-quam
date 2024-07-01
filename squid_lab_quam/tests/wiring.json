@@ -1,8 +1,0 @@
-{
-    "wiring": {
-        "drive_lines": {},
-        "feed_lines": {},
-        "flux_lines": {},
-        "__class__": "squid_lab_quam.components.wiring.OPXWiring"
-    }
-}

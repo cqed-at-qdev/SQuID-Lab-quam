@@ -26,5 +26,5 @@ class OPXFeedLineWiring(QuamComponent):
 @quam_dataclass
 class OPXWiring(QuamComponent):
     drive_lines: Dict[str, OPXIQChannelWiring] = field(default_factory=dict)
-    feed_lines: Dict[str, OPXIQChannelWiring] = field(default_factory=dict)
+    feed_lines: Dict[str, OPXFeedLineWiring] = field(default_factory=dict)
     flux_lines: Dict[str, OPXSingleChannelWiring] = field(default_factory=dict)

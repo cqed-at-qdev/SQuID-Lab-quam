@@ -1,0 +1,7 @@
+{
+    "octave": null,
+    "qubits": {},
+    "shared_qubit_parameters": {},
+    "_qmm": null,
+    "__class__": "squid_lab_quam.components.roots.QuAM"
+}

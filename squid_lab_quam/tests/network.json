@@ -1,0 +1,7 @@
+{
+    "network": {
+        "host": "",
+        "cluster_name": "",
+        "octave_networks": {}
+    }
+}

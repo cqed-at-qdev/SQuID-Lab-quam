@@ -13,8 +13,8 @@ def key_from_parent_dict(component: QuamComponent) -> Hashable:
     by setting self.id = "#./id_from_parent_dict" along with the property:
 
     @property
-    def id_from_parent_dict(self) -> Hashable:
-        return key_from_parent_dict(self)
+    def id_from_parent_dict(self) -> str:
+        return str(key_from_parent_dict(self))
 
 
     Args:

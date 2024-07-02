@@ -1,11 +1,19 @@
+from typing import Tuple, Union
+
 from quam.components.channels import InOutIQChannel
-from quam.core import quam_dataclass
+from quam.core import quam_dataclass, QuamComponent
+from quam.core import QuamComponent, quam_dataclass
+from qm.qua._dsl import (
+    AmpValuesType,
+    QuaVariableType,
+)
+
 
 __all__ = ["ReadoutResonator"]
 
 
 @quam_dataclass
-class ReadoutResonator(InOutIQChannel):
+class ReadoutResonator(QuamComponent):
     """QuAM component for a readout resonator
 
     Args:
@@ -13,6 +21,7 @@ class ReadoutResonator(InOutIQChannel):
         frequency_bare (int, float): the bare resonator frequency in Hz.
     """
 
+    channel: InOutIQChannel = None
     depletion_time: int = None
     frequency_bare: float = None
     frequency_q0: float = None
@@ -22,8 +31,22 @@ class ReadoutResonator(InOutIQChannel):
 
     @property
     def readout_frequency(self):
-        return self.RF_frequency
+        return self.channel.RF_frequency
 
     @readout_frequency.setter
     def readout_frequency(self, value):
-        self.RF_frequency = value
+        self.channel.RF_frequency = value
+
+    def measure(
+        self,
+        pulse_name: str,
+        amplitude_scale: Union[float, AmpValuesType] = None,
+        qua_vars: Tuple[QuaVariableType, QuaVariableType] = None,
+        stream=None,
+    ):
+        return self.channel.measure(
+            pulse_name=pulse_name,
+            amplitude_scale=amplitude_scale,
+            qua_vars=qua_vars,
+            stream=stream,
+        )

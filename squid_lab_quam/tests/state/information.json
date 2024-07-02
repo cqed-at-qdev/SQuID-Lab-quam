@@ -1,10 +1,10 @@
 {
     "information": {
-        "user_name": null,
-        "user_ku_tag": null,
-        "device_name": null,
-        "fridge_name": null,
-        "data_path": null,
-        "state_path": "C:/Users/drn455/Documents/GitHub/SQuID-Lab-quam/squid_lab_quam/tests/state"
+        "user_name": "Jacob Hastrup",
+        "user_ku_tag": "drn455",
+        "device_name": "Chalmers/5q4_v0",
+        "fridge_name": "meso",
+        "data_path": "\\\\unicph.domain\\groupdir\\SCI-NBI-QDev\\SQuID Lab Data\\Devices\\Chalmers 5q4c v1.1\\OPX Data",
+        "state_path": "C:\\Users\\jacob\\OneDrive\\Documents\\GitHub\\SQuID-Lab-quam\\squid_lab_quam\\tests\\state"
     }
 }

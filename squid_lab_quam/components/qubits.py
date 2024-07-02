@@ -24,15 +24,17 @@ class Transmon(QuamComponent):
     xy: IQChannel = None
     resonator: ReadoutResonator = None
 
-    transition_frequencies: list[float] = None
+    transition_frequencies: list[float] = field(default_factory=lambda: [None, None])
 
     T1: int = None
     T2ramsey: int = None
     T2echo: int = None
     thermalization_time_factor: int = 5  # exp(-5) = 0.0067
-    anharmonicity: int = None
     pulse_sets: dict[str, PulseSet] = field(default_factory=dict)
-    primary_pulse: str = None
+
+    def __post_init__(self):
+        if self.transition_frequencies is None:
+            self.transition_frequencies = [None, None]
 
     @property
     def id_from_parent_dict(self) -> str:
@@ -65,21 +67,21 @@ class Transmon(QuamComponent):
         self.transition_frequencies[1] = value
 
     @property
+    def anharmonicity(self):
+        return (
+            self.f_12 - self.f_01
+            if self.f_12 is not None and self.f_01 is not None
+            else None
+        )
+
+    @property
     def name(self):
         return self.id if isinstance(self.id, str) else f"q{self.id}"
 
     def set_default_gate_shape(self, gate_shape: str) -> None:
         if gate_shape not in self.pulse_sets:
-            # raise ValueError(f"Error: Pulse set is not defined")
             raise ValueError(
                 f"Error: Pulse set {gate_shape} not defined for qubit {self.name}. Defined pulse sets are {self.pulse_sets.keys()}"
             )
 
         self.pulse_sets[gate_shape].set_as_default_gate_shape()
-
-    def set_default_gate_shape(self, gate_shape: str) -> None:
-        """Set the shape for the default single qubit gates defined as
-        ["x180", "x90" "-x90", "y180", "y90", "-y90"]"""
-
-        for gate in ["x180", "x90", "-x90", "y180", "y90", "-y90"]:
-            self.xy.operations[gate] = f"#./{gate}_{gate_shape}"

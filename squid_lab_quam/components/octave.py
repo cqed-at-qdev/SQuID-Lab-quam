@@ -33,30 +33,30 @@ class OctaveUpConverterSQuID(OctaveUpConverter):
                     "Q": component.opx_output_Q,
                 }
 
-    def find_opx_outputs(self) -> dict[Literal["I", "Q"], tuple[str, int]]:
-        opx_outputs = {"I": None, "Q": None}
-        for component in self._root.iterate_components():
-            for attr_value in component.get_attrs().values():
-                if attr_value == self.get_reference():
-                    for I_or_Q in ("I", "Q"):
-                        if opx_outputs[I_or_Q] is None:
-                            opx_outputs[I_or_Q] = getattr(
-                                component, f"opx_output_{I_or_Q}"
-                            )
-                        elif opx_outputs[I_or_Q] != getattr(
-                            component, f"opx_output_{I_or_Q}"
-                        ):
-                            raise ValueError(
-                                f"Error: OctaveUpConverter {self.id} is connected to "
-                                f"multiple OPX output {I_or_Q} ports."
-                            )
+    # def find_opx_outputs(self) -> dict[Literal["I", "Q"], tuple[str, int]]:
+    #     opx_outputs = {"I": None, "Q": None}
+    #     for component in self._root.iterate_components():
+    #         for attr_value in component.get_attrs().values():
+    #             if attr_value == self.get_reference():
+    #                 for I_or_Q in ("I", "Q"):
+    #                     if opx_outputs[I_or_Q] is None:
+    #                         opx_outputs[I_or_Q] = getattr(
+    #                             component, f"opx_output_{I_or_Q}"
+    #                         )
+    #                     elif opx_outputs[I_or_Q] != getattr(
+    #                         component, f"opx_output_{I_or_Q}"
+    #                     ):
+    #                         raise ValueError(
+    #                             f"Error: OctaveUpConverter {self.id} is connected to "
+    #                             f"multiple OPX output {I_or_Q} ports."
+    #                         )
 
-        for I_or_Q in ("I", "Q"):
-            if opx_outputs[I_or_Q] is None:
-                raise ValueError(
-                    f"Error: OctaveUpConverter {self.id} is not connected to any OPX output {I_or_Q} port."
-                )
-        return opx_outputs
+    #     for I_or_Q in ("I", "Q"):
+    #         if opx_outputs[I_or_Q] is None:
+    #             raise ValueError(
+    #                 f"Error: OctaveUpConverter {self.id} is not connected to any OPX output {I_or_Q} port."
+    #             )
+    #     return opx_outputs
 
     def set_lo_frequency(self, frequency: float) -> None:
         self.octave.qm_octave.set_lo_frequency(self.default_element, frequency)
@@ -119,6 +119,16 @@ class OctaveDownConverterSQuID(OctaveDownConverter):
     @property
     def id_from_parent_dict(self) -> str:
         return str(key_from_parent_dict(self))
+
+    def find_opx_inputs(self) -> dict[Literal["I", "Q"], tuple[str, int]]:
+        for component in self._root.iterate_components():
+            if not isinstance(component, IQChannel):
+                continue
+            if component.frequency_converter_down == self:
+                return {
+                    "I": component.opx_input_I,
+                    "Q": component.opx_input_Q,
+                }
 
     def find_opx_inputs(self) -> dict[Literal["I", "Q"], tuple[str, int]]:
         opx_inputs = {"I": None, "Q": None}

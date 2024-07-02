@@ -66,6 +66,15 @@ class QuAMSCQ1(QuamRoot):
             )
         return self._qmm
 
+    def set_default_gate_shape(self, gate_shape: str):
+        """Set the default gate shape for all qubits.
+
+        Args:
+            gate_shape: The default gate shape to set.
+        """
+        for qubit in self.qubits.values():
+            qubit.set_default_gate_shape(gate_shape)
+
     def print_info(self):
         self.information.print_info()
 

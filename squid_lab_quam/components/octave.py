@@ -206,6 +206,12 @@ class OctaveDownConverterSQuID(OctaveDownConverter):
 class OctaveSQuID(Octave):
     """Modified Octave class with a qm property."""
 
+    name: str = "#./name_from_parent_dict"
+
+    @property
+    def name_from_parent_dict(self) -> str:
+        return str(key_from_parent_dict(self))
+
     @property
     def qm_octave(self) -> QmOctave:
         return self._root.qm.octave
@@ -237,8 +243,7 @@ class OctaveSQuID(Octave):
         for idx in range(1, 6):
             self.RF_outputs[idx] = OctaveUpConverterSQuID(
                 id=idx,
-                LO_frequency=None,  # TODO What should default be?
             )
 
         for idx in range(1, 3):
-            self.RF_inputs[idx] = OctaveDownConverterSQuID(id=idx, LO_frequency=None)
+            self.RF_inputs[idx] = OctaveDownConverterSQuID(id=idx)

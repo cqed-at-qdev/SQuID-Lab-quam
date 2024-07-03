@@ -1,9 +1,10 @@
-from dataclasses import dataclass, field
-from typing import Any, Type, Union
+from dataclasses import field
+from typing import Type, Union, List, Tuple
+from abc import abstractmethod
 
 from quam.components.channels import Channel
 from quam.components.pulses import Pulse
-from quam.core import QuamComponent, QuamDict, quam_dataclass
+from quam.core import QuamComponent, quam_dataclass
 
 from squid_lab_quam.components.pulses import DragGaussianPulse
 from squid_lab_quam.utils import key_from_parent_dict
@@ -34,25 +35,30 @@ class PulseSet(QuamComponent):
             )
         return self.PulseClass
 
+    @property
+    @abstractmethod
+    def individual_pulse_parameters(self) -> dict:
+        """Return a dictionary with the individual pulse parameters for each gate."""
+        pass
+
+    @property
+    @abstractmethod
+    def shared_pulse_parameters(self) -> dict:
+        """Return a dictionary with the shared pulse parameters for all gates."""
+        pass
+
     def _dict_values_as_references(self, dictionary: dict) -> dict:
         """Return a dictionary with the values of the input dictionary as quam references."""
         return {key: self.get_reference(key) for key in dictionary.keys()}
 
-    def _add_drive_pulses(
-        self,
-        individual_pulse_parameters: dict = None,
-        common_pulse_parameters: dict = None,
-    ):
+    def _add_drive_pulses(self):
         """Populate the channel of the pulse set with the drive pulses.
         Only used when generating quam structures."""
 
-        if individual_pulse_parameters is None:
-            individual_pulse_parameters = {}
-        if common_pulse_parameters is None:
-            common_pulse_parameters = {}
-
         for pulse in self.gates:
-            parameters = individual_pulse_parameters[pulse] | common_pulse_parameters
+            parameters = (
+                self.individual_pulse_parameters[pulse] | self.shared_pulse_parameters
+            )
             parameters_referenced = self._dict_values_as_references(parameters)
 
             self.channel.operations[f"{pulse}_{self.pulse_name}"] = self.Pulse(
@@ -87,11 +93,13 @@ class PulseSetDragGaussian(PulseSet):
     detuning: float = 0
     alpha: float = 0
     subtracted: bool = True
+    digital_marker: Union[str, List[Tuple[int, int]]] = None
 
     @property
     def amplitude_m90(self):
         return -self.amplitude_90
 
+    @property
     def individual_pulse_parameters(self):
         return {
             "x90": {
@@ -120,6 +128,7 @@ class PulseSetDragGaussian(PulseSet):
             },
         }
 
+    @property
     def shared_pulse_parameters(self):
         return {
             "length": self.length,
@@ -128,13 +137,8 @@ class PulseSetDragGaussian(PulseSet):
             "alpha": self.alpha,
             "detuning": self.detuning,
             "subtracted": self.subtracted,
+            "digital_marker": self.digital_marker,
         }
-
-    def _add_drive_pulses(self):
-        super()._add_drive_pulses(
-            individual_pulse_parameters=self.individual_pulse_parameters(),
-            common_pulse_parameters=self.shared_pulse_parameters(),
-        )
 
 
 class PulseSetFlattopCosine(PulseSet):

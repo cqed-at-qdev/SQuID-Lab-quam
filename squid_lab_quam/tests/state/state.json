@@ -7,7 +7,7 @@
                     "x90_drag_gaussian": {
                         "length": "#/qubits/q0/pulse_sets/drag_gaussian/length",
                         "id": null,
-                        "digital_marker": null,
+                        "digital_marker": "#/qubits/q0/pulse_sets/drag_gaussian/digital_marker",
                         "axis_angle": "#/qubits/q0/pulse_sets/drag_gaussian/axis_angle",
                         "amplitude": "#/qubits/q0/pulse_sets/drag_gaussian/amplitude",
                         "sigma": "#/qubits/q0/pulse_sets/drag_gaussian/sigma",
@@ -20,7 +20,7 @@
                     "x180_drag_gaussian": {
                         "length": "#/qubits/q0/pulse_sets/drag_gaussian/length",
                         "id": null,
-                        "digital_marker": null,
+                        "digital_marker": "#/qubits/q0/pulse_sets/drag_gaussian/digital_marker",
                         "axis_angle": "#/qubits/q0/pulse_sets/drag_gaussian/axis_angle",
                         "amplitude": "#/qubits/q0/pulse_sets/drag_gaussian/amplitude",
                         "sigma": "#/qubits/q0/pulse_sets/drag_gaussian/sigma",
@@ -33,7 +33,7 @@
                     "y90_drag_gaussian": {
                         "length": "#/qubits/q0/pulse_sets/drag_gaussian/length",
                         "id": null,
-                        "digital_marker": null,
+                        "digital_marker": "#/qubits/q0/pulse_sets/drag_gaussian/digital_marker",
                         "axis_angle": "#/qubits/q0/pulse_sets/drag_gaussian/axis_angle",
                         "amplitude": "#/qubits/q0/pulse_sets/drag_gaussian/amplitude",
                         "sigma": "#/qubits/q0/pulse_sets/drag_gaussian/sigma",
@@ -46,7 +46,7 @@
                     "y180_drag_gaussian": {
                         "length": "#/qubits/q0/pulse_sets/drag_gaussian/length",
                         "id": null,
-                        "digital_marker": null,
+                        "digital_marker": "#/qubits/q0/pulse_sets/drag_gaussian/digital_marker",
                         "axis_angle": "#/qubits/q0/pulse_sets/drag_gaussian/axis_angle",
                         "amplitude": "#/qubits/q0/pulse_sets/drag_gaussian/amplitude",
                         "sigma": "#/qubits/q0/pulse_sets/drag_gaussian/sigma",
@@ -59,7 +59,7 @@
                     "-x90_drag_gaussian": {
                         "length": "#/qubits/q0/pulse_sets/drag_gaussian/length",
                         "id": null,
-                        "digital_marker": null,
+                        "digital_marker": "#/qubits/q0/pulse_sets/drag_gaussian/digital_marker",
                         "axis_angle": "#/qubits/q0/pulse_sets/drag_gaussian/axis_angle",
                         "amplitude": "#/qubits/q0/pulse_sets/drag_gaussian/amplitude",
                         "sigma": "#/qubits/q0/pulse_sets/drag_gaussian/sigma",
@@ -72,7 +72,7 @@
                     "-y90_drag_gaussian": {
                         "length": "#/qubits/q0/pulse_sets/drag_gaussian/length",
                         "id": null,
-                        "digital_marker": null,
+                        "digital_marker": "#/qubits/q0/pulse_sets/drag_gaussian/digital_marker",
                         "axis_angle": "#/qubits/q0/pulse_sets/drag_gaussian/axis_angle",
                         "amplitude": "#/qubits/q0/pulse_sets/drag_gaussian/amplitude",
                         "sigma": "#/qubits/q0/pulse_sets/drag_gaussian/sigma",
@@ -102,7 +102,20 @@
             },
             "resonator": {
                 "channel": {
-                    "operations": {},
+                    "operations": {
+                        "readout": {
+                            "length": 1000,
+                            "id": null,
+                            "digital_marker": "ON",
+                            "amplitude": 0.1,
+                            "axis_angle": null,
+                            "threshold": 0.0,
+                            "rus_exit_threshold": null,
+                            "integration_weights": null,
+                            "integration_weights_angle": 0,
+                            "__class__": "quam.components.pulses.SquareReadoutPulse"
+                        }
+                    },
                     "id": null,
                     "digital_outputs": {},
                     "opx_input_I": "#/wiring/feed_lines/feedline/input_I",
@@ -160,6 +173,7 @@
                     "detuning": 0,
                     "alpha": 0,
                     "subtracted": "#/shared_qubit_parameters/drag_gaussian_pulse_parameters/subtracted",
+                    "digital_marker": null,
                     "__class__": "squid_lab_quam.components.pulse_sets.PulseSetDragGaussian"
                 }
             }
@@ -171,7 +185,7 @@
                     "x90_drag_gaussian": {
                         "length": "#/qubits/q1/pulse_sets/drag_gaussian/length",
                         "id": null,
-                        "digital_marker": null,
+                        "digital_marker": "#/qubits/q1/pulse_sets/drag_gaussian/digital_marker",
                         "axis_angle": "#/qubits/q1/pulse_sets/drag_gaussian/axis_angle",
                         "amplitude": "#/qubits/q1/pulse_sets/drag_gaussian/amplitude",
                         "sigma": "#/qubits/q1/pulse_sets/drag_gaussian/sigma",
@@ -184,7 +198,7 @@
                     "x180_drag_gaussian": {
                         "length": "#/qubits/q1/pulse_sets/drag_gaussian/length",
                         "id": null,
-                        "digital_marker": null,
+                        "digital_marker": "#/qubits/q1/pulse_sets/drag_gaussian/digital_marker",
                         "axis_angle": "#/qubits/q1/pulse_sets/drag_gaussian/axis_angle",
                         "amplitude": "#/qubits/q1/pulse_sets/drag_gaussian/amplitude",
                         "sigma": "#/qubits/q1/pulse_sets/drag_gaussian/sigma",
@@ -197,7 +211,7 @@
                     "y90_drag_gaussian": {
                         "length": "#/qubits/q1/pulse_sets/drag_gaussian/length",
                         "id": null,
-                        "digital_marker": null,
+                        "digital_marker": "#/qubits/q1/pulse_sets/drag_gaussian/digital_marker",
                         "axis_angle": "#/qubits/q1/pulse_sets/drag_gaussian/axis_angle",
                         "amplitude": "#/qubits/q1/pulse_sets/drag_gaussian/amplitude",
                         "sigma": "#/qubits/q1/pulse_sets/drag_gaussian/sigma",
@@ -210,7 +224,7 @@
                     "y180_drag_gaussian": {
                         "length": "#/qubits/q1/pulse_sets/drag_gaussian/length",
                         "id": null,
-                        "digital_marker": null,
+                        "digital_marker": "#/qubits/q1/pulse_sets/drag_gaussian/digital_marker",
                         "axis_angle": "#/qubits/q1/pulse_sets/drag_gaussian/axis_angle",
                         "amplitude": "#/qubits/q1/pulse_sets/drag_gaussian/amplitude",
                         "sigma": "#/qubits/q1/pulse_sets/drag_gaussian/sigma",
@@ -223,7 +237,7 @@
                     "-x90_drag_gaussian": {
                         "length": "#/qubits/q1/pulse_sets/drag_gaussian/length",
                         "id": null,
-                        "digital_marker": null,
+                        "digital_marker": "#/qubits/q1/pulse_sets/drag_gaussian/digital_marker",
                         "axis_angle": "#/qubits/q1/pulse_sets/drag_gaussian/axis_angle",
                         "amplitude": "#/qubits/q1/pulse_sets/drag_gaussian/amplitude",
                         "sigma": "#/qubits/q1/pulse_sets/drag_gaussian/sigma",
@@ -236,7 +250,7 @@
                     "-y90_drag_gaussian": {
                         "length": "#/qubits/q1/pulse_sets/drag_gaussian/length",
                         "id": null,
-                        "digital_marker": null,
+                        "digital_marker": "#/qubits/q1/pulse_sets/drag_gaussian/digital_marker",
                         "axis_angle": "#/qubits/q1/pulse_sets/drag_gaussian/axis_angle",
                         "amplitude": "#/qubits/q1/pulse_sets/drag_gaussian/amplitude",
                         "sigma": "#/qubits/q1/pulse_sets/drag_gaussian/sigma",
@@ -266,7 +280,20 @@
             },
             "resonator": {
                 "channel": {
-                    "operations": {},
+                    "operations": {
+                        "readout": {
+                            "length": 1000,
+                            "id": null,
+                            "digital_marker": "ON",
+                            "amplitude": 0.1,
+                            "axis_angle": null,
+                            "threshold": 0.0,
+                            "rus_exit_threshold": null,
+                            "integration_weights": null,
+                            "integration_weights_angle": 0,
+                            "__class__": "quam.components.pulses.SquareReadoutPulse"
+                        }
+                    },
                     "id": null,
                     "digital_outputs": {},
                     "opx_input_I": "#/wiring/feed_lines/feedline/input_I",
@@ -324,6 +351,7 @@
                     "detuning": 0,
                     "alpha": 0,
                     "subtracted": "#/shared_qubit_parameters/drag_gaussian_pulse_parameters/subtracted",
+                    "digital_marker": null,
                     "__class__": "squid_lab_quam.components.pulse_sets.PulseSetDragGaussian"
                 }
             }
@@ -335,7 +363,7 @@
                     "x90_drag_gaussian": {
                         "length": "#/qubits/q2/pulse_sets/drag_gaussian/length",
                         "id": null,
-                        "digital_marker": null,
+                        "digital_marker": "#/qubits/q2/pulse_sets/drag_gaussian/digital_marker",
                         "axis_angle": "#/qubits/q2/pulse_sets/drag_gaussian/axis_angle",
                         "amplitude": "#/qubits/q2/pulse_sets/drag_gaussian/amplitude",
                         "sigma": "#/qubits/q2/pulse_sets/drag_gaussian/sigma",
@@ -348,7 +376,7 @@
                     "x180_drag_gaussian": {
                         "length": "#/qubits/q2/pulse_sets/drag_gaussian/length",
                         "id": null,
-                        "digital_marker": null,
+                        "digital_marker": "#/qubits/q2/pulse_sets/drag_gaussian/digital_marker",
                         "axis_angle": "#/qubits/q2/pulse_sets/drag_gaussian/axis_angle",
                         "amplitude": "#/qubits/q2/pulse_sets/drag_gaussian/amplitude",
                         "sigma": "#/qubits/q2/pulse_sets/drag_gaussian/sigma",
@@ -361,7 +389,7 @@
                     "y90_drag_gaussian": {
                         "length": "#/qubits/q2/pulse_sets/drag_gaussian/length",
                         "id": null,
-                        "digital_marker": null,
+                        "digital_marker": "#/qubits/q2/pulse_sets/drag_gaussian/digital_marker",
                         "axis_angle": "#/qubits/q2/pulse_sets/drag_gaussian/axis_angle",
                         "amplitude": "#/qubits/q2/pulse_sets/drag_gaussian/amplitude",
                         "sigma": "#/qubits/q2/pulse_sets/drag_gaussian/sigma",
@@ -374,7 +402,7 @@
                     "y180_drag_gaussian": {
                         "length": "#/qubits/q2/pulse_sets/drag_gaussian/length",
                         "id": null,
-                        "digital_marker": null,
+                        "digital_marker": "#/qubits/q2/pulse_sets/drag_gaussian/digital_marker",
                         "axis_angle": "#/qubits/q2/pulse_sets/drag_gaussian/axis_angle",
                         "amplitude": "#/qubits/q2/pulse_sets/drag_gaussian/amplitude",
                         "sigma": "#/qubits/q2/pulse_sets/drag_gaussian/sigma",
@@ -387,7 +415,7 @@
                     "-x90_drag_gaussian": {
                         "length": "#/qubits/q2/pulse_sets/drag_gaussian/length",
                         "id": null,
-                        "digital_marker": null,
+                        "digital_marker": "#/qubits/q2/pulse_sets/drag_gaussian/digital_marker",
                         "axis_angle": "#/qubits/q2/pulse_sets/drag_gaussian/axis_angle",
                         "amplitude": "#/qubits/q2/pulse_sets/drag_gaussian/amplitude",
                         "sigma": "#/qubits/q2/pulse_sets/drag_gaussian/sigma",
@@ -400,7 +428,7 @@
                     "-y90_drag_gaussian": {
                         "length": "#/qubits/q2/pulse_sets/drag_gaussian/length",
                         "id": null,
-                        "digital_marker": null,
+                        "digital_marker": "#/qubits/q2/pulse_sets/drag_gaussian/digital_marker",
                         "axis_angle": "#/qubits/q2/pulse_sets/drag_gaussian/axis_angle",
                         "amplitude": "#/qubits/q2/pulse_sets/drag_gaussian/amplitude",
                         "sigma": "#/qubits/q2/pulse_sets/drag_gaussian/sigma",
@@ -430,7 +458,20 @@
             },
             "resonator": {
                 "channel": {
-                    "operations": {},
+                    "operations": {
+                        "readout": {
+                            "length": 1000,
+                            "id": null,
+                            "digital_marker": "ON",
+                            "amplitude": 0.1,
+                            "axis_angle": null,
+                            "threshold": 0.0,
+                            "rus_exit_threshold": null,
+                            "integration_weights": null,
+                            "integration_weights_angle": 0,
+                            "__class__": "quam.components.pulses.SquareReadoutPulse"
+                        }
+                    },
                     "id": null,
                     "digital_outputs": {},
                     "opx_input_I": "#/wiring/feed_lines/feedline/input_I",
@@ -488,6 +529,7 @@
                     "detuning": 0,
                     "alpha": 0,
                     "subtracted": "#/shared_qubit_parameters/drag_gaussian_pulse_parameters/subtracted",
+                    "digital_marker": null,
                     "__class__": "squid_lab_quam.components.pulse_sets.PulseSetDragGaussian"
                 }
             }
@@ -499,7 +541,7 @@
                     "x90_drag_gaussian": {
                         "length": "#/qubits/q3/pulse_sets/drag_gaussian/length",
                         "id": null,
-                        "digital_marker": null,
+                        "digital_marker": "#/qubits/q3/pulse_sets/drag_gaussian/digital_marker",
                         "axis_angle": "#/qubits/q3/pulse_sets/drag_gaussian/axis_angle",
                         "amplitude": "#/qubits/q3/pulse_sets/drag_gaussian/amplitude",
                         "sigma": "#/qubits/q3/pulse_sets/drag_gaussian/sigma",
@@ -512,7 +554,7 @@
                     "x180_drag_gaussian": {
                         "length": "#/qubits/q3/pulse_sets/drag_gaussian/length",
                         "id": null,
-                        "digital_marker": null,
+                        "digital_marker": "#/qubits/q3/pulse_sets/drag_gaussian/digital_marker",
                         "axis_angle": "#/qubits/q3/pulse_sets/drag_gaussian/axis_angle",
                         "amplitude": "#/qubits/q3/pulse_sets/drag_gaussian/amplitude",
                         "sigma": "#/qubits/q3/pulse_sets/drag_gaussian/sigma",
@@ -525,7 +567,7 @@
                     "y90_drag_gaussian": {
                         "length": "#/qubits/q3/pulse_sets/drag_gaussian/length",
                         "id": null,
-                        "digital_marker": null,
+                        "digital_marker": "#/qubits/q3/pulse_sets/drag_gaussian/digital_marker",
                         "axis_angle": "#/qubits/q3/pulse_sets/drag_gaussian/axis_angle",
                         "amplitude": "#/qubits/q3/pulse_sets/drag_gaussian/amplitude",
                         "sigma": "#/qubits/q3/pulse_sets/drag_gaussian/sigma",
@@ -538,7 +580,7 @@
                     "y180_drag_gaussian": {
                         "length": "#/qubits/q3/pulse_sets/drag_gaussian/length",
                         "id": null,
-                        "digital_marker": null,
+                        "digital_marker": "#/qubits/q3/pulse_sets/drag_gaussian/digital_marker",
                         "axis_angle": "#/qubits/q3/pulse_sets/drag_gaussian/axis_angle",
                         "amplitude": "#/qubits/q3/pulse_sets/drag_gaussian/amplitude",
                         "sigma": "#/qubits/q3/pulse_sets/drag_gaussian/sigma",
@@ -551,7 +593,7 @@
                     "-x90_drag_gaussian": {
                         "length": "#/qubits/q3/pulse_sets/drag_gaussian/length",
                         "id": null,
-                        "digital_marker": null,
+                        "digital_marker": "#/qubits/q3/pulse_sets/drag_gaussian/digital_marker",
                         "axis_angle": "#/qubits/q3/pulse_sets/drag_gaussian/axis_angle",
                         "amplitude": "#/qubits/q3/pulse_sets/drag_gaussian/amplitude",
                         "sigma": "#/qubits/q3/pulse_sets/drag_gaussian/sigma",
@@ -564,7 +606,7 @@
                     "-y90_drag_gaussian": {
                         "length": "#/qubits/q3/pulse_sets/drag_gaussian/length",
                         "id": null,
-                        "digital_marker": null,
+                        "digital_marker": "#/qubits/q3/pulse_sets/drag_gaussian/digital_marker",
                         "axis_angle": "#/qubits/q3/pulse_sets/drag_gaussian/axis_angle",
                         "amplitude": "#/qubits/q3/pulse_sets/drag_gaussian/amplitude",
                         "sigma": "#/qubits/q3/pulse_sets/drag_gaussian/sigma",
@@ -594,7 +636,20 @@
             },
             "resonator": {
                 "channel": {
-                    "operations": {},
+                    "operations": {
+                        "readout": {
+                            "length": 1000,
+                            "id": null,
+                            "digital_marker": "ON",
+                            "amplitude": 0.1,
+                            "axis_angle": null,
+                            "threshold": 0.0,
+                            "rus_exit_threshold": null,
+                            "integration_weights": null,
+                            "integration_weights_angle": 0,
+                            "__class__": "quam.components.pulses.SquareReadoutPulse"
+                        }
+                    },
                     "id": null,
                     "digital_outputs": {},
                     "opx_input_I": "#/wiring/feed_lines/feedline/input_I",
@@ -652,6 +707,7 @@
                     "detuning": 0,
                     "alpha": 0,
                     "subtracted": "#/shared_qubit_parameters/drag_gaussian_pulse_parameters/subtracted",
+                    "digital_marker": null,
                     "__class__": "squid_lab_quam.components.pulse_sets.PulseSetDragGaussian"
                 }
             }
@@ -663,7 +719,7 @@
                     "x90_drag_gaussian": {
                         "length": "#/qubits/q4/pulse_sets/drag_gaussian/length",
                         "id": null,
-                        "digital_marker": null,
+                        "digital_marker": "#/qubits/q4/pulse_sets/drag_gaussian/digital_marker",
                         "axis_angle": "#/qubits/q4/pulse_sets/drag_gaussian/axis_angle",
                         "amplitude": "#/qubits/q4/pulse_sets/drag_gaussian/amplitude",
                         "sigma": "#/qubits/q4/pulse_sets/drag_gaussian/sigma",
@@ -676,7 +732,7 @@
                     "x180_drag_gaussian": {
                         "length": "#/qubits/q4/pulse_sets/drag_gaussian/length",
                         "id": null,
-                        "digital_marker": null,
+                        "digital_marker": "#/qubits/q4/pulse_sets/drag_gaussian/digital_marker",
                         "axis_angle": "#/qubits/q4/pulse_sets/drag_gaussian/axis_angle",
                         "amplitude": "#/qubits/q4/pulse_sets/drag_gaussian/amplitude",
                         "sigma": "#/qubits/q4/pulse_sets/drag_gaussian/sigma",
@@ -689,7 +745,7 @@
                     "y90_drag_gaussian": {
                         "length": "#/qubits/q4/pulse_sets/drag_gaussian/length",
                         "id": null,
-                        "digital_marker": null,
+                        "digital_marker": "#/qubits/q4/pulse_sets/drag_gaussian/digital_marker",
                         "axis_angle": "#/qubits/q4/pulse_sets/drag_gaussian/axis_angle",
                         "amplitude": "#/qubits/q4/pulse_sets/drag_gaussian/amplitude",
                         "sigma": "#/qubits/q4/pulse_sets/drag_gaussian/sigma",
@@ -702,7 +758,7 @@
                     "y180_drag_gaussian": {
                         "length": "#/qubits/q4/pulse_sets/drag_gaussian/length",
                         "id": null,
-                        "digital_marker": null,
+                        "digital_marker": "#/qubits/q4/pulse_sets/drag_gaussian/digital_marker",
                         "axis_angle": "#/qubits/q4/pulse_sets/drag_gaussian/axis_angle",
                         "amplitude": "#/qubits/q4/pulse_sets/drag_gaussian/amplitude",
                         "sigma": "#/qubits/q4/pulse_sets/drag_gaussian/sigma",
@@ -715,7 +771,7 @@
                     "-x90_drag_gaussian": {
                         "length": "#/qubits/q4/pulse_sets/drag_gaussian/length",
                         "id": null,
-                        "digital_marker": null,
+                        "digital_marker": "#/qubits/q4/pulse_sets/drag_gaussian/digital_marker",
                         "axis_angle": "#/qubits/q4/pulse_sets/drag_gaussian/axis_angle",
                         "amplitude": "#/qubits/q4/pulse_sets/drag_gaussian/amplitude",
                         "sigma": "#/qubits/q4/pulse_sets/drag_gaussian/sigma",
@@ -728,7 +784,7 @@
                     "-y90_drag_gaussian": {
                         "length": "#/qubits/q4/pulse_sets/drag_gaussian/length",
                         "id": null,
-                        "digital_marker": null,
+                        "digital_marker": "#/qubits/q4/pulse_sets/drag_gaussian/digital_marker",
                         "axis_angle": "#/qubits/q4/pulse_sets/drag_gaussian/axis_angle",
                         "amplitude": "#/qubits/q4/pulse_sets/drag_gaussian/amplitude",
                         "sigma": "#/qubits/q4/pulse_sets/drag_gaussian/sigma",
@@ -758,7 +814,20 @@
             },
             "resonator": {
                 "channel": {
-                    "operations": {},
+                    "operations": {
+                        "readout": {
+                            "length": 1000,
+                            "id": null,
+                            "digital_marker": "ON",
+                            "amplitude": 0.1,
+                            "axis_angle": null,
+                            "threshold": 0.0,
+                            "rus_exit_threshold": null,
+                            "integration_weights": null,
+                            "integration_weights_angle": 0,
+                            "__class__": "quam.components.pulses.SquareReadoutPulse"
+                        }
+                    },
                     "id": null,
                     "digital_outputs": {},
                     "opx_input_I": "#/wiring/feed_lines/feedline/input_I",
@@ -816,6 +885,7 @@
                     "detuning": 0,
                     "alpha": 0,
                     "subtracted": "#/shared_qubit_parameters/drag_gaussian_pulse_parameters/subtracted",
+                    "digital_marker": null,
                     "__class__": "squid_lab_quam.components.pulse_sets.PulseSetDragGaussian"
                 }
             }

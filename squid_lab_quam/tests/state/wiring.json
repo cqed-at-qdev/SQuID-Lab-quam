@@ -4,41 +4,41 @@
             "q0": {
                 "port_I": [
                     "con1",
-                    0
+                    3
                 ],
                 "port_Q": [
                     "con1",
-                    0
+                    4
                 ]
             },
             "q1": {
                 "port_I": [
                     "con1",
-                    0
+                    5
                 ],
                 "port_Q": [
                     "con1",
-                    0
+                    6
                 ]
             },
             "q2": {
                 "port_I": [
                     "con1",
-                    0
+                    7
                 ],
                 "port_Q": [
                     "con1",
-                    0
+                    8
                 ]
             },
             "q3": {
                 "port_I": [
                     "con1",
-                    0
+                    9
                 ],
                 "port_Q": [
                     "con1",
-                    0
+                    10
                 ]
             },
             "q4": {
@@ -56,19 +56,19 @@
             "feedline": {
                 "output_I": [
                     "con1",
-                    0
+                    1
                 ],
                 "output_Q": [
                     "con1",
-                    0
+                    2
                 ],
                 "input_I": [
                     "con1",
-                    0
+                    1
                 ],
                 "input_Q": [
                     "con1",
-                    0
+                    2
                 ]
             }
         },

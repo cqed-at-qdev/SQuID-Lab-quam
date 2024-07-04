@@ -81,26 +81,6 @@
                         "detuning": "#/qubits/q0/pulse_sets/drag_gaussian/detuning",
                         "subtracted": "#/qubits/q0/pulse_sets/drag_gaussian/subtracted",
                         "__class__": "squid_lab_quam.components.pulses.DragGaussianPulse"
-                    },
-                    "rise_flattop_cosine": {
-                        "length": "#/qubits/q0/pulse_sets/flattop_cosine/rise_fall_time",
-                        "id": null,
-                        "digital_marker": null,
-                        "amplitude": "#/qubits/q0/pulse_sets/flattop_cosine/amplitude",
-                        "axis_angle": null,
-                        "flat_length": 0,
-                        "return_part": "rise",
-                        "__class__": "squid_lab_quam.components.pulses.FlatTopCosinePulse"
-                    },
-                    "fall_flattop_cosine": {
-                        "length": "#/qubits/q0/pulse_sets/flattop_cosine/rise_fall_time",
-                        "id": null,
-                        "digital_marker": null,
-                        "amplitude": "#/qubits/q0/pulse_sets/flattop_cosine/amplitude",
-                        "axis_angle": null,
-                        "flat_length": 0,
-                        "return_part": "fall",
-                        "__class__": "squid_lab_quam.components.pulses.FlatTopCosinePulse"
                     }
                 },
                 "id": null,
@@ -271,26 +251,6 @@
                         "detuning": "#/qubits/q1/pulse_sets/drag_gaussian/detuning",
                         "subtracted": "#/qubits/q1/pulse_sets/drag_gaussian/subtracted",
                         "__class__": "squid_lab_quam.components.pulses.DragGaussianPulse"
-                    },
-                    "rise_flattop_cosine": {
-                        "length": "#/qubits/q1/pulse_sets/flattop_cosine/rise_fall_time",
-                        "id": null,
-                        "digital_marker": null,
-                        "amplitude": "#/qubits/q1/pulse_sets/flattop_cosine/amplitude",
-                        "axis_angle": null,
-                        "flat_length": 0,
-                        "return_part": "rise",
-                        "__class__": "squid_lab_quam.components.pulses.FlatTopCosinePulse"
-                    },
-                    "fall_flattop_cosine": {
-                        "length": "#/qubits/q1/pulse_sets/flattop_cosine/rise_fall_time",
-                        "id": null,
-                        "digital_marker": null,
-                        "amplitude": "#/qubits/q1/pulse_sets/flattop_cosine/amplitude",
-                        "axis_angle": null,
-                        "flat_length": 0,
-                        "return_part": "fall",
-                        "__class__": "squid_lab_quam.components.pulses.FlatTopCosinePulse"
                     }
                 },
                 "id": null,
@@ -461,26 +421,6 @@
                         "detuning": "#/qubits/q2/pulse_sets/drag_gaussian/detuning",
                         "subtracted": "#/qubits/q2/pulse_sets/drag_gaussian/subtracted",
                         "__class__": "squid_lab_quam.components.pulses.DragGaussianPulse"
-                    },
-                    "rise_flattop_cosine": {
-                        "length": "#/qubits/q2/pulse_sets/flattop_cosine/rise_fall_time",
-                        "id": null,
-                        "digital_marker": null,
-                        "amplitude": "#/qubits/q2/pulse_sets/flattop_cosine/amplitude",
-                        "axis_angle": null,
-                        "flat_length": 0,
-                        "return_part": "rise",
-                        "__class__": "squid_lab_quam.components.pulses.FlatTopCosinePulse"
-                    },
-                    "fall_flattop_cosine": {
-                        "length": "#/qubits/q2/pulse_sets/flattop_cosine/rise_fall_time",
-                        "id": null,
-                        "digital_marker": null,
-                        "amplitude": "#/qubits/q2/pulse_sets/flattop_cosine/amplitude",
-                        "axis_angle": null,
-                        "flat_length": 0,
-                        "return_part": "fall",
-                        "__class__": "squid_lab_quam.components.pulses.FlatTopCosinePulse"
                     }
                 },
                 "id": null,
@@ -651,26 +591,6 @@
                         "detuning": "#/qubits/q3/pulse_sets/drag_gaussian/detuning",
                         "subtracted": "#/qubits/q3/pulse_sets/drag_gaussian/subtracted",
                         "__class__": "squid_lab_quam.components.pulses.DragGaussianPulse"
-                    },
-                    "rise_flattop_cosine": {
-                        "length": "#/qubits/q3/pulse_sets/flattop_cosine/rise_fall_time",
-                        "id": null,
-                        "digital_marker": null,
-                        "amplitude": "#/qubits/q3/pulse_sets/flattop_cosine/amplitude",
-                        "axis_angle": null,
-                        "flat_length": 0,
-                        "return_part": "rise",
-                        "__class__": "squid_lab_quam.components.pulses.FlatTopCosinePulse"
-                    },
-                    "fall_flattop_cosine": {
-                        "length": "#/qubits/q3/pulse_sets/flattop_cosine/rise_fall_time",
-                        "id": null,
-                        "digital_marker": null,
-                        "amplitude": "#/qubits/q3/pulse_sets/flattop_cosine/amplitude",
-                        "axis_angle": null,
-                        "flat_length": 0,
-                        "return_part": "fall",
-                        "__class__": "squid_lab_quam.components.pulses.FlatTopCosinePulse"
                     }
                 },
                 "id": null,
@@ -680,196 +600,6 @@
                 "opx_output_offset_I": null,
                 "opx_output_offset_Q": null,
                 "frequency_converter_up": "#/octaves/octave1/RF_outputs/5",
-                "intermediate_frequency": 0.0,
-                "LO_frequency": "#./frequency_converter_up/LO_frequency",
-                "RF_frequency": "#./inferred_RF_frequency"
-            },
-            "resonator": {
-                "channel": {
-                    "operations": {
-                        "readout": {
-                            "length": 1000,
-                            "id": null,
-                            "digital_marker": "ON",
-                            "amplitude": 0.1,
-                            "axis_angle": null,
-                            "threshold": 0.0,
-                            "rus_exit_threshold": null,
-                            "integration_weights": null,
-                            "integration_weights_angle": 0,
-                            "__class__": "quam.components.pulses.SquareReadoutPulse"
-                        }
-                    },
-                    "id": null,
-                    "digital_outputs": {},
-                    "opx_input_I": "#/wiring/feed_lines/feedline/input_I",
-                    "opx_input_Q": "#/wiring/feed_lines/feedline/input_Q",
-                    "time_of_flight": 24,
-                    "smearing": 0,
-                    "opx_input_offset_I": null,
-                    "opx_input_offset_Q": null,
-                    "input_gain": null,
-                    "frequency_converter_down": "#/octaves/octave1/RF_inputs/1",
-                    "opx_output_I": "#/wiring/feed_lines/feedline/output_I",
-                    "opx_output_Q": "#/wiring/feed_lines/feedline/output_Q",
-                    "opx_output_offset_I": null,
-                    "opx_output_offset_Q": null,
-                    "frequency_converter_up": "#/octaves/octave1/RF_outputs/1",
-                    "intermediate_frequency": 0.0,
-                    "LO_frequency": "#./frequency_converter_up/LO_frequency",
-                    "RF_frequency": "#./inferred_RF_frequency"
-                },
-                "depletion_time": null,
-                "frequency_bare": null,
-                "frequency_q0": null,
-                "frequency_q1": null,
-                "Q_int": null,
-                "Q_ext": null
-            },
-            "transition_frequencies": [
-                6,
-                5
-            ],
-            "T1": null,
-            "T2ramsey": null,
-            "T2echo": null,
-            "thermalization_time_factor": 5,
-            "pulse_sets": {
-                "drag_gaussian": {
-                    "pulse_name": "#./_id_from_parent_dict",
-                    "channel": "#../../xy",
-                    "amplitude_90": 0.25,
-                    "amplitude_180": 0.5,
-                    "length": "#/shared_qubit_parameters/drag_gaussian_pulse_parameters/length",
-                    "sigma": "#/shared_qubit_parameters/drag_gaussian_pulse_parameters/sigma",
-                    "phase_x": 0,
-                    "phase_y": 90,
-                    "anharmonicity": "#../../anharmonicity",
-                    "detuning": 0,
-                    "alpha": 0,
-                    "subtracted": "#/shared_qubit_parameters/drag_gaussian_pulse_parameters/subtracted",
-                    "digital_marker": null,
-                    "__class__": "squid_lab_quam.components.pulse_sets.PulseSetDragGaussian"
-                },
-                "flattop_cosine": {
-                    "pulse_name": "#./_id_from_parent_dict",
-                    "channel": "#../../xy",
-                    "amplitude": 0.1,
-                    "rise_fall_time": 16,
-                    "__class__": "squid_lab_quam.components.pulse_sets.PulseSetFlattopCosine"
-                }
-            }
-        },
-        "q4": {
-            "id": "#./id_from_parent_dict",
-            "xy": {
-                "operations": {
-                    "x90_drag_gaussian": {
-                        "length": "#/qubits/q4/pulse_sets/drag_gaussian/length",
-                        "id": null,
-                        "digital_marker": "#/qubits/q4/pulse_sets/drag_gaussian/digital_marker",
-                        "axis_angle": "#/qubits/q4/pulse_sets/drag_gaussian/phase_x",
-                        "amplitude": "#/qubits/q4/pulse_sets/drag_gaussian/amplitude_90",
-                        "sigma": "#/qubits/q4/pulse_sets/drag_gaussian/sigma",
-                        "alpha": "#/qubits/q4/pulse_sets/drag_gaussian/alpha",
-                        "anharmonicity": "#/qubits/q4/pulse_sets/drag_gaussian/anharmonicity",
-                        "detuning": "#/qubits/q4/pulse_sets/drag_gaussian/detuning",
-                        "subtracted": "#/qubits/q4/pulse_sets/drag_gaussian/subtracted",
-                        "__class__": "squid_lab_quam.components.pulses.DragGaussianPulse"
-                    },
-                    "x180_drag_gaussian": {
-                        "length": "#/qubits/q4/pulse_sets/drag_gaussian/length",
-                        "id": null,
-                        "digital_marker": "#/qubits/q4/pulse_sets/drag_gaussian/digital_marker",
-                        "axis_angle": "#/qubits/q4/pulse_sets/drag_gaussian/phase_x",
-                        "amplitude": "#/qubits/q4/pulse_sets/drag_gaussian/amplitude_180",
-                        "sigma": "#/qubits/q4/pulse_sets/drag_gaussian/sigma",
-                        "alpha": "#/qubits/q4/pulse_sets/drag_gaussian/alpha",
-                        "anharmonicity": "#/qubits/q4/pulse_sets/drag_gaussian/anharmonicity",
-                        "detuning": "#/qubits/q4/pulse_sets/drag_gaussian/detuning",
-                        "subtracted": "#/qubits/q4/pulse_sets/drag_gaussian/subtracted",
-                        "__class__": "squid_lab_quam.components.pulses.DragGaussianPulse"
-                    },
-                    "y90_drag_gaussian": {
-                        "length": "#/qubits/q4/pulse_sets/drag_gaussian/length",
-                        "id": null,
-                        "digital_marker": "#/qubits/q4/pulse_sets/drag_gaussian/digital_marker",
-                        "axis_angle": "#/qubits/q4/pulse_sets/drag_gaussian/phase_y",
-                        "amplitude": "#/qubits/q4/pulse_sets/drag_gaussian/amplitude_90",
-                        "sigma": "#/qubits/q4/pulse_sets/drag_gaussian/sigma",
-                        "alpha": "#/qubits/q4/pulse_sets/drag_gaussian/alpha",
-                        "anharmonicity": "#/qubits/q4/pulse_sets/drag_gaussian/anharmonicity",
-                        "detuning": "#/qubits/q4/pulse_sets/drag_gaussian/detuning",
-                        "subtracted": "#/qubits/q4/pulse_sets/drag_gaussian/subtracted",
-                        "__class__": "squid_lab_quam.components.pulses.DragGaussianPulse"
-                    },
-                    "y180_drag_gaussian": {
-                        "length": "#/qubits/q4/pulse_sets/drag_gaussian/length",
-                        "id": null,
-                        "digital_marker": "#/qubits/q4/pulse_sets/drag_gaussian/digital_marker",
-                        "axis_angle": "#/qubits/q4/pulse_sets/drag_gaussian/phase_y",
-                        "amplitude": "#/qubits/q4/pulse_sets/drag_gaussian/amplitude_180",
-                        "sigma": "#/qubits/q4/pulse_sets/drag_gaussian/sigma",
-                        "alpha": "#/qubits/q4/pulse_sets/drag_gaussian/alpha",
-                        "anharmonicity": "#/qubits/q4/pulse_sets/drag_gaussian/anharmonicity",
-                        "detuning": "#/qubits/q4/pulse_sets/drag_gaussian/detuning",
-                        "subtracted": "#/qubits/q4/pulse_sets/drag_gaussian/subtracted",
-                        "__class__": "squid_lab_quam.components.pulses.DragGaussianPulse"
-                    },
-                    "-x90_drag_gaussian": {
-                        "length": "#/qubits/q4/pulse_sets/drag_gaussian/length",
-                        "id": null,
-                        "digital_marker": "#/qubits/q4/pulse_sets/drag_gaussian/digital_marker",
-                        "axis_angle": "#/qubits/q4/pulse_sets/drag_gaussian/phase_x",
-                        "amplitude": "#/qubits/q4/pulse_sets/drag_gaussian/amplitude_m90",
-                        "sigma": "#/qubits/q4/pulse_sets/drag_gaussian/sigma",
-                        "alpha": "#/qubits/q4/pulse_sets/drag_gaussian/alpha",
-                        "anharmonicity": "#/qubits/q4/pulse_sets/drag_gaussian/anharmonicity",
-                        "detuning": "#/qubits/q4/pulse_sets/drag_gaussian/detuning",
-                        "subtracted": "#/qubits/q4/pulse_sets/drag_gaussian/subtracted",
-                        "__class__": "squid_lab_quam.components.pulses.DragGaussianPulse"
-                    },
-                    "-y90_drag_gaussian": {
-                        "length": "#/qubits/q4/pulse_sets/drag_gaussian/length",
-                        "id": null,
-                        "digital_marker": "#/qubits/q4/pulse_sets/drag_gaussian/digital_marker",
-                        "axis_angle": "#/qubits/q4/pulse_sets/drag_gaussian/phase_y",
-                        "amplitude": "#/qubits/q4/pulse_sets/drag_gaussian/amplitude_m90",
-                        "sigma": "#/qubits/q4/pulse_sets/drag_gaussian/sigma",
-                        "alpha": "#/qubits/q4/pulse_sets/drag_gaussian/alpha",
-                        "anharmonicity": "#/qubits/q4/pulse_sets/drag_gaussian/anharmonicity",
-                        "detuning": "#/qubits/q4/pulse_sets/drag_gaussian/detuning",
-                        "subtracted": "#/qubits/q4/pulse_sets/drag_gaussian/subtracted",
-                        "__class__": "squid_lab_quam.components.pulses.DragGaussianPulse"
-                    },
-                    "rise_flattop_cosine": {
-                        "length": "#/qubits/q4/pulse_sets/flattop_cosine/rise_fall_time",
-                        "id": null,
-                        "digital_marker": null,
-                        "amplitude": "#/qubits/q4/pulse_sets/flattop_cosine/amplitude",
-                        "axis_angle": null,
-                        "flat_length": 0,
-                        "return_part": "rise",
-                        "__class__": "squid_lab_quam.components.pulses.FlatTopCosinePulse"
-                    },
-                    "fall_flattop_cosine": {
-                        "length": "#/qubits/q4/pulse_sets/flattop_cosine/rise_fall_time",
-                        "id": null,
-                        "digital_marker": null,
-                        "amplitude": "#/qubits/q4/pulse_sets/flattop_cosine/amplitude",
-                        "axis_angle": null,
-                        "flat_length": 0,
-                        "return_part": "fall",
-                        "__class__": "squid_lab_quam.components.pulses.FlatTopCosinePulse"
-                    }
-                },
-                "id": null,
-                "digital_outputs": {},
-                "opx_output_I": "#/wiring/drive_lines/q4/port_I",
-                "opx_output_Q": "#/wiring/drive_lines/q4/port_Q",
-                "opx_output_offset_I": null,
-                "opx_output_offset_Q": null,
-                "frequency_converter_up": "#/octaves/octave1/RF_outputs/6",
                 "intermediate_frequency": 0.0,
                 "LO_frequency": "#./frequency_converter_up/LO_frequency",
                 "RF_frequency": "#./inferred_RF_frequency"
@@ -1006,16 +736,6 @@
                     "__class__": "squid_lab_quam.components.octave.OctaveUpConverterSQuID"
                 },
                 "5": {
-                    "id": "#./id_from_parent_dict",
-                    "channel": null,
-                    "LO_frequency": 5500000000.0,
-                    "LO_source": "internal",
-                    "gain": 0,
-                    "output_mode": "always_off",
-                    "input_attenuators": "off",
-                    "__class__": "squid_lab_quam.components.octave.OctaveUpConverterSQuID"
-                },
-                "6": {
                     "id": "#./id_from_parent_dict",
                     "channel": null,
                     "LO_frequency": 5500000000.0,

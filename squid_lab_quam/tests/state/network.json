@@ -1,10 +1,10 @@
 {
     "network": {
-        "host": "10.209.67.168",
+        "host": "10.209.96.1",
         "cluster_name": "Cluster_1",
         "octave_networks": {
             "octave1": {
-                "octave_host": "10.209.67.174",
+                "octave_host": "10.209.96.11",
                 "octave_port": 80,
                 "controller": "con1"
             }

@@ -1,0 +1,13 @@
+Notes to Serwan:
+
+get_reference() with argument, might want to return error if argument doesn't exist?
+
+given a reference string, how do we access the component in QuAM?
+
+properties visible in state.json?
+
+Non-local components, e.g. network settings
+
+Loading using base quam, i.e. by automatically detecting and importing relevant QuAM root module
+
+Manually setting channel names 

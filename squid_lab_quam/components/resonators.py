@@ -25,6 +25,11 @@ class ReadoutResonator(QuamComponent):
     Q_ext: float = None
 
     @property
+    def name(self):
+        # Temporary fix for the resonator qua element to have a name
+        return f"{self.parent.name}.resonator"
+
+    @property
     def readout_frequency(self):
         return self.channel.RF_frequency
 

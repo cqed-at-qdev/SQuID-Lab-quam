@@ -1,5 +1,5 @@
 from dataclasses import field
-from typing import Dict, Sequence
+from typing import ClassVar, Dict, Sequence
 
 from qm import QuantumMachine
 from qm.qua import align
@@ -30,10 +30,9 @@ class QuAMSCQ1(QuamRoot):
     shared_qubit_parameters: dict = field(default_factory=dict)
     octaves: Dict[str, OctaveSQuID] = field(default_factory=dict)
 
-    # TODO: hide these attributes in hinting
-    _qm: QuantumMachine = None
-    _qmm: QuantumMachinesManager = None
-    _config: dict = None
+    _qm: ClassVar[QuantumMachine] = None
+    _qmm: ClassVar[QuantumMachinesManager] = None
+    _config: ClassVar[dict] = None
 
     @property
     def octave(self):
@@ -107,7 +106,7 @@ class QuAMSCQ1(QuamRoot):
             raise ValueError("The state_path in information must be set before saving.")
 
         if ignore is None:
-            ignore = ["_qm", "_config"]
+            ignore = ["_qm", "_qmm", "_config"]
         else:
             ignore = list(ignore) + ["_qm", "_config"]
 

@@ -1,7 +1,8 @@
-from dataclasses import field
-from typing import Type, Union, List, Tuple
 from abc import abstractmethod
+from dataclasses import field
+from typing import ClassVar, List, Tuple, Type, Union
 
+import qm.qua as qua
 from quam.components.channels import Channel
 from quam.components.pulses import Pulse
 from quam.core import QuamComponent, quam_dataclass
@@ -77,7 +78,7 @@ class PulseSet(QuamComponent):
 @quam_dataclass
 class PulseSetDragGaussian(PulseSet):
 
-    PulseClass: str = "squid_lab_quam.components.pulses.DragGaussianPulse"
+    PulseClass: ClassVar[str] = "squid_lab_quam.components.pulses.DragGaussianPulse"
     gates: list[str] = field(
         init=False,
         default_factory=lambda: ["x90", "x180", "y90", "y180", "-x90", "-y90"],
@@ -85,10 +86,10 @@ class PulseSetDragGaussian(PulseSet):
 
     amplitude_90: float
     amplitude_180: float
-    phase_x: float = 0
-    phase_y: float = 90
     length: float
     sigma: float
+    phase_x: float = 0
+    phase_y: float = 90
     anharmonicity: float
     detuning: float = 0
     alpha: float = 0
@@ -141,102 +142,39 @@ class PulseSetDragGaussian(PulseSet):
         }
 
 
+@quam_dataclass
 class PulseSetFlattopCosine(PulseSet):
 
-    gates: list[str] = field(init=False, default_factory=list)
-
-    def __post_init__(self):
-        self.gates = ["rise", "fall"]
-
-    # @classmethod
-    # def pulse_set_drag_gaussian(
-    #     self,
-    #     length: float,
-    #     sigma: float,
-    #     anharmonicity: float,
-    #     amplitude_90: float,
-    #     amplitude_180: float,
-    #     phase_x: float = 0,
-    #     phase_y: float = 90,
-    #     alpha: float = 0,
-    #     detuning: float = 0,
-    #     subtracted: bool = False,
-    # ):
-    #     return self(
-    #         PulseClass=DragGaussianPulse,
-    #         gates=["x90", "x180", "y90", "y180", "-x90", "-y90"],
-    #         individual_pulse_parameters={
-    #             "x90": {
-    #                 "amplitude": ...,
-    #                 "axis_angle": ...,
-    #             },
-    #             "x180": {
-    #                 "amplitude": ...,
-    #                 "axis_angle": ...,
-    #             },
-    #             "y90": {
-    #                 "amplitude": ...,
-    #                 "axis_angle": ...,
-    #             },
-    #             "-x90": {
-    #                 "amplitude": ...,
-    #                 "axis_angle": ...,
-    #             },
-    #             "-y90": {
-    #                 "amplitude": ...,
-    #                 "axis_angle": ...,
-    #             },
-    #             "y180": {
-    #                 "amplitude": ...,
-    #                 "axis_angle": ...,
-    #             },
-    #         },
-    #         common_pulse_parameters={
-    #             "length": length,
-    #             "sigma": sigma,
-    #             "anharmonicity": anharmonicity,
-    #             "alpha": alpha,
-    #             "detuning": detuning,
-    #             "subtracted": subtracted,
-    #         },
-    #     )
-
-
-if __name__ == "__main__":
-    pulse_set = PulseSetDragGaussian(
-        amplitude_90=0,
-        amplitude_180=0,
+    PulseClass: ClassVar[str] = "squid_lab_quam.components.pulses.FlatTopCosinePulse"
+    gates: list[str] = field(
+        default_factory=lambda: ["rise", "fall"],
     )
 
-    pulse_set
+    amplitude: float
+    rise_fall_time: int
 
+    @property
+    def individual_pulse_parameters(self):
+        return {
+            "rise": {
+                "return_part": "rise",
+            },
+            "fall": {
+                "return_part": "fall",
+            },
+        }
 
-# @quam_dataclass
-# class PulseSetXY18090(PulseSet):
-#     """QuAM component for a set of XY 180 and 90 degree pulses."""
+    @property
+    def shared_pulse_parameters(self):
+        return {
+            "length": self.rise_fall_time,
+            "amplitude": self.amplitude,
+        }
 
-#     @property
-#     def amplitude_m90(self):
-#         return -self.amplitude_90
-
-
-# PulseSetXY18090(
-#     PulseClass=DragGaussianPulse,
-#     individual_pulse_parameters={
-#         "x90": {
-#             "amplitude": ...,
-#             "axis_angle": ...,
-#         },
-#         "x180": {},
-#         "y90": {},
-#         "-x90": {},
-#         "-y90": {},
-#         "y180": {},
-#     },
-#     common_pulse_parameters={
-#         "duration": ...,
-#         "sigma": ...,
-#         "anharmonicity": ...,
-#         "alpha": ...,
-#     },
-# )
+    def play_flattop(self, plateau_duration: int):
+        """Synethesize a flattop pulse with a given plateau duration.
+        Note: only works if the element is sticky."""
+        # TODO: add support for amplitude scaling
+        qua.play(pulse=f"rise_{self.pulse_name}", element=self.channel.name)
+        qua.wait(plateau_duration, self.channel.name)
+        qua.play(pulse=f"fall_{self.pulse_name}", element=self.channel.name)

@@ -12,7 +12,6 @@ from squid_lab_quam.components.octave import OctaveSQuID
 from squid_lab_quam.components.qubits import Transmon
 from squid_lab_quam.components.wiring import OPXWiring
 
-
 __all__ = ["QuAMSCQ1"]
 
 
@@ -35,6 +34,11 @@ class QuAMSCQ1(QuamRoot):
     _qm: QuantumMachine = None
     _qmm: QuantumMachinesManager = None
     _config: dict = None
+
+    @property
+    def octave(self):
+        # Temporary fix, TODO: properly handle multiple octaves
+        return next(iter(self.octaves.values())) if self.octaves else None
 
     @property
     def initial_quam(self):

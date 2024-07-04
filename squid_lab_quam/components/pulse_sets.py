@@ -1,25 +1,23 @@
 from abc import abstractmethod
 from dataclasses import field
-from typing import ClassVar, List, Tuple, Type, Union
+from typing import ClassVar, Iterable, List, Tuple, Type, Union
 
 import qm.qua as qua
 from quam.components.channels import Channel
 from quam.components.pulses import Pulse
 from quam.core import QuamComponent, quam_dataclass
 
-from squid_lab_quam.components.pulses import DragGaussianPulse
 from squid_lab_quam.utils import key_from_parent_dict
 
 
 @quam_dataclass
 class PulseSet(QuamComponent):
-    """QuAM component for a set of pulses."""
+    """Base QuAM component for a pulse set."""
 
     PulseClass: str
+    gates: Iterable[str]
     pulse_name: str = "#./_id_from_parent_dict"
     channel: Channel = "#../../xy"
-
-    gates: list[str] = None
 
     @property
     def _id_from_parent_dict(self) -> str:
@@ -39,31 +37,34 @@ class PulseSet(QuamComponent):
     @property
     @abstractmethod
     def individual_pulse_parameters(self) -> dict:
-        """Return a dictionary with the individual pulse parameters for each gate."""
+        """Return a dictionary with the individual pulse parameters for each gate.
+        See PulseSetDragGaussian for an example."""
         pass
 
     @property
     @abstractmethod
     def shared_pulse_parameters(self) -> dict:
-        """Return a dictionary with the shared pulse parameters for all gates."""
+        """Return a dictionary with the shared pulse parameters for all gates.
+        See PulseSetDragGaussian for an example."""
         pass
 
-    def _dict_values_as_references(self, dictionary: dict) -> dict:
-        """Return a dictionary with the values of the input dictionary as quam references."""
-        return {key: self.get_reference(key) for key in dictionary.keys()}
-
-    def _add_drive_pulses(self):
+    def add_drive_pulses(self):
         """Populate the channel of the pulse set with the drive pulses.
         Only used when generating quam structures."""
+
+        for gate_name in self.individual_pulse_parameters.keys():
+            if gate_name not in self.gates:
+                raise ValueError(
+                    f"individual_pulse_parameters gate {gate_name} is not in the list of gates {self.gates}."
+                )
 
         for pulse in self.gates:
             parameters = (
                 self.individual_pulse_parameters[pulse] | self.shared_pulse_parameters
             )
-            parameters_referenced = self._dict_values_as_references(parameters)
 
             self.channel.operations[f"{pulse}_{self.pulse_name}"] = self.Pulse(
-                **parameters_referenced
+                **parameters
             )
 
     def set_as_default_gate_shape(self) -> None:
@@ -71,7 +72,7 @@ class PulseSet(QuamComponent):
 
         for gate in self.gates:
             if gate not in self.channel.operations:
-                self._add_drive_pulses()
+                self.add_drive_pulses()
             self.channel.operations[gate] = f"#./{gate}_{self.pulse_name}"
 
 
@@ -79,10 +80,7 @@ class PulseSet(QuamComponent):
 class PulseSetDragGaussian(PulseSet):
 
     PulseClass: ClassVar[str] = "squid_lab_quam.components.pulses.DragGaussianPulse"
-    gates: list[str] = field(
-        init=False,
-        default_factory=lambda: ["x90", "x180", "y90", "y180", "-x90", "-y90"],
-    )
+    gates: ClassVar[Iterable[str]] = ("x90", "x180", "y90", "y180", "-x90", "-y90")
 
     amplitude_90: float
     amplitude_180: float
@@ -104,41 +102,44 @@ class PulseSetDragGaussian(PulseSet):
     def individual_pulse_parameters(self):
         return {
             "x90": {
-                "amplitude": self.amplitude_90,
-                "axis_angle": self.phase_x,
+                "amplitude": self.get_reference("amplitude_90"),
+                "axis_angle": self.get_reference("phase_x"),
             },
             "x180": {
-                "amplitude": self.amplitude_180,
-                "axis_angle": self.phase_x,
+                "amplitude": self.get_reference("amplitude_180"),
+                "axis_angle": self.get_reference("phase_x"),
             },
             "y90": {
-                "amplitude": self.amplitude_90,
-                "axis_angle": self.phase_y,
+                "amplitude": self.get_reference("amplitude_90"),
+                "axis_angle": self.get_reference("phase_y"),
             },
             "-x90": {
-                "amplitude": self.amplitude_m90,
-                "axis_angle": self.phase_x,
+                "amplitude": self.get_reference("amplitude_m90"),
+                "axis_angle": self.get_reference("phase_x"),
             },
             "-y90": {
-                "amplitude": self.amplitude_m90,
-                "axis_angle": self.phase_y,
+                "amplitude": self.get_reference("amplitude_m90"),
+                "axis_angle": self.get_reference("phase_y"),
             },
             "y180": {
-                "amplitude": self.amplitude_180,
-                "axis_angle": self.phase_y,
+                "amplitude": self.get_reference("amplitude_180"),
+                "axis_angle": self.get_reference("phase_y"),
             },
         }
 
     @property
     def shared_pulse_parameters(self):
         return {
-            "length": self.length,
-            "sigma": self.sigma,
-            "anharmonicity": self.anharmonicity,
-            "alpha": self.alpha,
-            "detuning": self.detuning,
-            "subtracted": self.subtracted,
-            "digital_marker": self.digital_marker,
+            parameter: self.get_reference(parameter)
+            for parameter in (
+                "length",
+                "sigma",
+                "anharmonicity",
+                "alpha",
+                "detuning",
+                "subtracted",
+                "digital_marker",
+            )
         }
 
 
@@ -146,9 +147,7 @@ class PulseSetDragGaussian(PulseSet):
 class PulseSetFlattopCosine(PulseSet):
 
     PulseClass: ClassVar[str] = "squid_lab_quam.components.pulses.FlatTopCosinePulse"
-    gates: list[str] = field(
-        default_factory=lambda: ["rise", "fall"],
-    )
+    gates: ClassVar[Iterable[str]] = ("rise", "fall")
 
     amplitude: float
     rise_fall_time: int
@@ -167,8 +166,8 @@ class PulseSetFlattopCosine(PulseSet):
     @property
     def shared_pulse_parameters(self):
         return {
-            "length": self.rise_fall_time,
-            "amplitude": self.amplitude,
+            "length": self.get_reference("rise_fall_time"),
+            "amplitude": self.get_reference("amplitude"),
         }
 
     def play_flattop(self, plateau_duration: int):

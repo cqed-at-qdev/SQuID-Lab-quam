@@ -10,9 +10,37 @@ from squid_lab_quam.utils import key_from_parent_dict
 
 @quam_dataclass
 class OctaveUpConverterSQuID(OctaveUpConverter):
-    """Modified OctaveUpConverter which can set LO frequency and gain."""
+    """Modified OctaveUpConverter which can set LO frequency and gain.
+
+    The OctaveUpConverter represents a frequency upconverter in the QM Octave. Usually
+    an IQChannel is connected `OctaveUpconverter.channel`, in which case the two OPX
+    outputs are connected to the I and Q inputs of the OctaveUpConverter.
+    The OPX outputs are specified in the `OctaveUpConverter.channel` attribute.
+    The channel is either an IQChannel or a SingleChannel.
+
+    Args:
+        id: The RF output id, must be between 1-5.
+        LO_frequency: The local oscillator frequency in Hz, between 2 and 18 GHz.
+        LO_source: The local oscillator source, "internal" (default) or "external".
+        gain: The gain of the output, between -20 and 20 dB in steps of 0.5.
+            Default is 0 dB.
+        output_mode: Sets the fast switch's mode of the up converter module.
+            Can be "always_on" / "always_off" / "triggered" / "triggered_reversed".
+            The default is "always_on".
+            - "always_on" - Output is always on
+            - "always_off" - Output is always off
+            - "triggered" - The output will play when rising edge is detected in the
+              octave's digital port.
+            - "triggered_reversed" - The output will play when falling edge is detected
+              in the octave's digital port.
+        input_attenuators: Whether the I and Q ports have a 10 dB attenuator before
+            entering the mixer. Off by default.
+    """
 
     id: Union[int, str] = "#./id_from_parent_dict"
+    output_mode: Literal[
+        "always_on", "always_off", "triggered", "triggered_reversed"
+    ] = "always_on"
 
     @property
     def id_from_parent_dict(self) -> str:
@@ -112,13 +140,41 @@ class OctaveUpConverterSQuID(OctaveUpConverter):
 
 @quam_dataclass
 class OctaveDownConverterSQuID(OctaveDownConverter):
-    """Modified OctaveUpConverter which can set LO frequency and gain and doesn't need a channel or id."""
+    """Modified OctaveUpConverter which can set LO frequency and gain and doesn't need a channel or id.
 
-    id: Union[int, str] = "#./id_from_parent_dict"
+    The OctaveDownConverter represents a frequency downconverter in the QM Octave. The
+    OctaveDownConverter is usually connected to an InOutIQChannel, in which case the
+    two OPX inputs are connected to the IF outputs of the OctaveDownConverter. The
+    OPX inputs are specified in the `OctaveDownConverter.channel` attribute. The
+    channel is either an InOutIQChannel or an InOutSingleChannel.
+
+    Args:
+        id: The RF input id, must be between 1-2.
+        LO_frequency: The local oscillator frequency in Hz, between 2 and 18 GHz.
+        LO_source: The local oscillator source, "internal" or "external.
+            For down converter 1 "internal" is the default,
+            for down converter 2 "external" is the default.
+        IF_mode_I: Sets the mode of the I port of the IF Down Converter module as can be
+            seen in the octave block diagram (see Octave page in QUA documentation).
+            Can be "direct" / "envelope" / "mixer" / "off". The default is "direct".
+            - "direct" - The signal bypasses the IF module.
+            - "envelope" - The signal passes through an envelope detector.
+            - "mixer" - The signal passes through a low-frequency mixer.
+            - "off" - the signal doesn't pass to the output port.
+        IF_mode_Q: Sets the mode of the Q port of the IF Down Converter module.
+        IF_output_I: The output port of the IF Down Converter module for the I port.
+            Can be 1 or 2. The default is 1. This will be 2 if the IF outputs
+            are connected to the opposite OPX inputs
+        IF_output_Q: The output port of the IF Down Converter module for the Q port.
+            Can be 1 or 2. The default is 2. This will be 1 if the IF outputs
+            are connected to the opposite OPX inputs.
+    """
+
+    id: Literal[1, 2] = "#./id_from_parent_dict"
 
     @property
-    def id_from_parent_dict(self) -> str:
-        return str(key_from_parent_dict(self))
+    def id_from_parent_dict(self) -> int:
+        return int(key_from_parent_dict(self))
 
     def find_opx_inputs(self) -> dict[Literal["I", "Q"], tuple[str, int]]:
         for component in self._root.iterate_components():
@@ -214,7 +270,31 @@ class OctaveDownConverterSQuID(OctaveDownConverter):
 
 @quam_dataclass
 class OctaveSQuID(Octave):
-    """Modified Octave class with a qm property."""
+    """Modified Octave class with a qm property.
+
+    The QM Octave is a device that can be used to upconvert and downconvert signals. It
+    has 5 RF outputs and 2 RF inputs. Each RF_output has an associated
+    `OctaveUpConverter`, and similarly each RF_input has an `OctaveDownConverter`.
+
+    In many cases the Octave is connected to a single OPX in the default configuration,
+    i.e. OPX outputs are connected to the corresponding Octave I/Q input, and Octave IF
+    outputs are connected to the corresponding OPX input. In this case you can configure
+    the Octave with the correct `FrequencyConverter`s using
+    `Octave.initialize_default_connectivity()`.
+
+    Args:
+        name: The name of the Octave. Must be unique
+        ip: The IP address of the Octave. Used in `Octave.get_octave_config()`
+        port: The port number of the Octave. Used in `Octave.get_octave_config()`
+        calibration_db_path: The path to the calibration database. If not specified, the
+            current working directory is used.
+        RF_outputs: A dictionary of `OctaveUpConverter` objects. The keys are the
+            output numbers (1-5).
+        RF_inputs: A dictionary of `OctaveDownConverter` objects. The keys are the
+            input numbers (1-2).
+        loopbacks: A list of loopback connections, for example to connect a local
+            oscillator. See the QUA Octave documentation for details.
+    """
 
     name: str = "#./name_from_parent_dict"
 

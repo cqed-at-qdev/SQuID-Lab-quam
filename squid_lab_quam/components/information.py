@@ -53,10 +53,29 @@ class QuamMetadata(QuamComponent):
         """Update the last_updated field to the current time"""
         self.last_updated = str(datetime.now())
 
+    @property
+    def name(self) -> str:
+        name = self.parent.get_attr_name(self)
+        if not name.endswith("__metadata"):
+            raise ValueError(
+                f"Metadata parameter name {name} does not end with '__metadata'"
+            )
+
+        return name
+
+    @property
+    def parameter_name(self) -> str:
+        return self.name.split("__")[0]
+
+    @property
     def value(self):
-        metadata_name = self.parent.get_attr_name(self)
-        value_name = metadata_name.split("__")[-1]
-        return self.parent.get_attr_value(value_name)
+        return getattr(self.parent, self.parameter_name)
+
+    @classmethod
+    def get_metadata(self, component: QuamComponent, attr: str) -> "QuamMetadata":
+        """Get the metadata object for an attribute of a component"""
+        metadata_name = f"{attr}__metadata"
+        return getattr(component, metadata_name)
 
 
 def data_path_from_device_name(

@@ -33,6 +33,7 @@ class QuAMSCQ1(QuamRoot):
     _qm: ClassVar[QuantumMachine] = None
     _qmm: ClassVar[QuantumMachinesManager] = None
     _config: ClassVar[dict] = None
+    _initial_quam: ClassVar["QuAMSCQ1"] = None
 
     @property
     def octave(self):
@@ -40,27 +41,25 @@ class QuAMSCQ1(QuamRoot):
         return next(iter(self.octaves.values())) if self.octaves else None
 
     @property
-    def initial_quam(self):
-        if hasattr(self, "_initial_quam"):
-            return self._initial_quam
-        else:
+    def initial_quam(self) -> "QuAMSCQ1":
+        if self._initial_quam is None:
             self._initial_quam = self.load(self.information.state_path)
-            return self._initial_quam
+        return self._initial_quam
 
     @property
-    def config(self):
+    def config(self) -> dict:
         if self._config is None:
             self._config = self.generate_config()
         return self._config
 
     @property
-    def qm(self):
+    def qm(self) -> QuantumMachine:
         if self._qm is None:
             self._qm = self.qmm.open_qm(self.config)
         return self._qm
 
     @property
-    def qmm(self):
+    def qmm(self) -> QuantumMachinesManager:
         if self._qmm is None:
             self._qmm = QuantumMachinesManager(
                 host=self.network.host,
@@ -69,7 +68,7 @@ class QuAMSCQ1(QuamRoot):
             )
         return self._qmm
 
-    def set_default_gate_shape(self, gate_shape: str):
+    def set_default_gate_shape(self, gate_shape: str) -> None:
         """Set the default gate shape for all qubits.
 
         Args:
@@ -78,16 +77,17 @@ class QuAMSCQ1(QuamRoot):
         for qubit in self.qubits.values():
             qubit.set_default_gate_shape(gate_shape)
 
-    def print_info(self):
+    def print_info(self) -> None:
         self.information.print_info()
 
-    def close_qm(self):
+    def close_qm(self) -> None:
         """Close the Quantum Machine."""
         if self.qm is not None:
             self.qm.close()
 
     def save(
         self,
+        path=None,
         content_mapping: Dict[str, str] = None,
         include_defaults: bool = True,
         ignore: Sequence[str] = None,
@@ -102,13 +102,13 @@ class QuAMSCQ1(QuamRoot):
                 value.
             ignore: A list of attributes to ignore.
         """
-        if self.information.state_path is None:
-            raise ValueError("The state_path in information must be set before saving.")
 
-        if ignore is None:
-            ignore = ["_qm", "_qmm", "_config"]
-        else:
-            ignore = list(ignore) + ["_qm", "_config"]
+        if path is None:
+            if self.information.state_path is None:
+                raise ValueError(
+                    "The state_path in information must be set before saving."
+                )
+            path = self.information.state_path
 
         if content_mapping is None:
             content_mapping = {
@@ -118,14 +118,14 @@ class QuAMSCQ1(QuamRoot):
             }
 
         super().save(
-            path=self.information.state_path,
+            path=path,
             content_mapping=content_mapping,
             include_defaults=include_defaults,
             ignore=ignore,
         )
 
     @classmethod
-    def generate_empty_quam(n_qubits: int, n_feedlines: int = 1) -> "QuAM":
+    def generate_empty_quam(n_qubits: int, n_feedlines: int = 1) -> "QuAMSCQ1":
         """Generate an empty QuAM object with a given number of qubits.
 
         Args:

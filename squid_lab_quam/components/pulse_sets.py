@@ -7,6 +7,7 @@ from quam.components.channels import Channel
 from quam.components.pulses import Pulse
 from quam.core import QuamComponent, quam_dataclass
 
+from squid_lab_quam.components.information import QuamMetadata
 from squid_lab_quam.utils import key_from_parent_dict
 
 
@@ -83,15 +84,93 @@ class PulseSetDragGaussian(PulseSet):
     gates: ClassVar[Iterable[str]] = ("x90", "x180", "y90", "y180", "-x90", "-y90")
 
     amplitude_90: float
+    amplitude_90__metadata: QuamMetadata = field(
+        default_factory=lambda: QuamMetadata(
+            unit="V",
+            long_name="π/2-pulse peak amplitude",
+            description="Amplitude of the π/2 pulse.",
+        )
+    )
+
     amplitude_180: float
+    amplitude_180__metadata: QuamMetadata = field(
+        default_factory=lambda: QuamMetadata(
+            unit="V",
+            long_name="π-pulse peak amplitude",
+            description="Amplitude of the π pulse.",
+        )
+    )
+
     length: float
+    length__metadata: QuamMetadata = field(
+        default_factory=lambda: QuamMetadata(
+            unit="ns",
+            long_name="Pulse length",
+            description="Length of the window containing the pulse.",
+        )
+    )
+
     sigma: float
+    sigma__metadata: QuamMetadata = field(
+        default_factory=lambda: QuamMetadata(
+            unit="ns",
+            long_name="Pulse sigma",
+            description="Width of the Gaussian waveform pulse.",
+        )
+    )
+
     phase_x: float = 0
+    phase_x__metadata: QuamMetadata = field(
+        default_factory=lambda: QuamMetadata(
+            unit="degree",
+            long_name="X-axis phase",
+            description="Phase of the pulse in the X-axis.",
+        )
+    )
+
     phase_y: float = 90
+    phase_y__metadata: QuamMetadata = field(
+        default_factory=lambda: QuamMetadata(
+            unit="degree",
+            long_name="Y-axis phase",
+            description="Phase of the pulse in the Y-axis.",
+        )
+    )
+
     anharmonicity: float
+    anharmonicity__metadata: QuamMetadata = field(
+        default_factory=lambda: QuamMetadata(
+            unit="Hz",
+            long_name="Waveform anharmonicity",
+            description="Anharmonicity used in the calculation of the DRAG waveform.",
+        )
+    )
+
     detuning: float = 0
+    detuning__metadata: QuamMetadata = field(
+        default_factory=lambda: QuamMetadata(
+            unit="Hz",
+            long_name="Detuning",
+            description="Detuning of the pulse from the channel RF frequency.",
+        )
+    )
+
     alpha: float = 0
+    alpha__metadata: QuamMetadata = field(
+        default_factory=lambda: QuamMetadata(
+            long_name="DRAG coefficient",
+            description="Coefficient for the derivative of the pulse.",
+        )
+    )
+
     subtracted: bool = True
+    subtracted__metadata: QuamMetadata = field(
+        default_factory=lambda: QuamMetadata(
+            long_name="Subtracted",
+            description="Whether the pulse is shifted such that the end points are 0",
+        )
+    )
+
     digital_marker: Union[str, List[Tuple[int, int]]] = None
 
     @property
@@ -151,7 +230,22 @@ class PulseSetFlattopCosine(PulseSet):
     gates: ClassVar[Iterable[str]] = ("rise", "fall")
 
     amplitude: float
+    amplitude__metadata: QuamMetadata = field(
+        default_factory=lambda: QuamMetadata(
+            unit="V",
+            long_name="Pulse amplitude",
+            description="Peak amplitude of the pulse.",
+        )
+    )
+
     rise_fall_time: int
+    rise_fall_time__metadata: QuamMetadata = field(
+        default_factory=lambda: QuamMetadata(
+            unit="ns",
+            long_name="Rise and fall time",
+            description="Time taken for the pulse to rise and fall, each the rise and fall parts are each of this duration.",
+        )
+    )
 
     @property
     def negative_amplitude(self) -> float:

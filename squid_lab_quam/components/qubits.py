@@ -4,6 +4,7 @@ from typing import Union
 from quam.components.channels import IQChannel
 from quam.core import QuamComponent, quam_dataclass
 
+from squid_lab_quam.components.information import QuamMetadata
 from squid_lab_quam.components.pulse_sets import PulseSet
 from squid_lab_quam.components.resonators import ReadoutResonator
 from squid_lab_quam.utils import key_from_parent_dict
@@ -25,11 +26,47 @@ class Transmon(QuamComponent):
     resonator: ReadoutResonator = None
 
     transition_frequencies: list[float] = field(default_factory=lambda: [None, None])
+    transition_frequencies__metadata: QuamMetadata = field(
+        default_factory=lambda: QuamMetadata(
+            unit="Hz",
+            long_name="Transition frequencies",
+            description="Transition frequencies of the qubit in the form [f01, f12, ...]",
+        )
+    )  # TODO: consider if list is convinient or if we should have separate fields
 
     T1: int = None
+    T1__metadata: QuamMetadata = field(
+        default_factory=lambda: QuamMetadata(
+            unit="s", long_name="T1", description="Qubit decay rate"
+        )
+    )
     T2ramsey: int = None
+    T2ramsey__metadata: QuamMetadata = field(
+        default_factory=lambda: QuamMetadata(
+            unit="s",
+            long_name="T2 Ramsey",
+            description="Dephasing time as measured by a Ramsey experiment",
+        )
+    )
+
     T2echo: int = None
+    T2echo__metadata: QuamMetadata = field(
+        default_factory=lambda: QuamMetadata(
+            unit="s",
+            long_name="T2 echo",
+            description="Dephasing time as measured by an echo experiment",
+        )
+    )
+
     thermalization_time_factor: int = 5  # exp(-5) = 0.0067
+    thermalization_time_factor__metadata: QuamMetadata = field(
+        default_factory=lambda: QuamMetadata(
+            unit="int",
+            long_name="Thermalization time factor",
+            description="Factor to multiply the T1 time in cooldown qubit resets",
+        )
+    )
+
     pulse_sets: dict[str, PulseSet] = field(default_factory=dict)
 
     def __post_init__(self):

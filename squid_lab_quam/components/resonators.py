@@ -1,8 +1,11 @@
+from dataclasses import field
 from typing import Tuple, Union
 
 from qm.qua._dsl import AmpValuesType, QuaVariableType
 from quam.components.channels import InOutIQChannel
 from quam.core import QuamComponent, quam_dataclass
+
+from squid_lab_quam.components.information import QuamMetadata
 
 __all__ = ["ReadoutResonator"]
 
@@ -18,15 +21,68 @@ class ReadoutResonator(QuamComponent):
 
     channel: InOutIQChannel
     depletion_time: int = None
+    depletion_time__metadata: QuamMetadata = field(
+        default_factory=lambda: QuamMetadata(
+            unit="ns",
+            long_name="Depletion time",
+            description="The resonator depletion time",
+        )
+    )
+
     frequency_bare: float = None
+    frequency_bare__metadata: QuamMetadata = field(
+        default_factory=lambda: QuamMetadata(
+            unit="Hz",
+            long_name="Bare frequency",
+            description="The bare resonator frequency, i.e., as measured at high power",
+        )
+    )
+
     frequency_q0: float = None
+    frequency_q0__metadata: QuamMetadata = field(
+        default_factory=lambda: QuamMetadata(
+            unit="Hz",
+            long_name="Q0 frequency",
+            description="The dispersively shifted resonator frequency with the qubit in state |0⟩",
+        )
+    )
+
     frequency_q1: float = None
+    frequency_q1__metadata: QuamMetadata = field(
+        default_factory=lambda: QuamMetadata(
+            unit="Hz",
+            long_name="Q1 frequency",
+            description="The dispersively shifted resonator frequency with the qubit in state |1⟩",
+        )
+    )
+
     Q_int: float = None
+    Q_int__metadata: QuamMetadata = field(
+        default_factory=lambda: QuamMetadata(
+            long_name="Internal quality factor",
+            description="The internal quality factor of the resonator",
+        )
+    )
+
     Q_ext: float = None
+    Q_ext__metadata: QuamMetadata = field(
+        default_factory=lambda: QuamMetadata(
+            long_name="External quality factor",
+            description="The external quality factor of the resonator",
+        )
+    )
+
+    readout_frequency__metadata: QuamMetadata = field(
+        default_factory=lambda: QuamMetadata(
+            unit="Hz",
+            long_name="Readout frequency",
+            description="The readout frequency of the resonator",
+        )
+    )
 
     @property
     def name(self):
-        # Temporary fix for the resonator qua element to have a name
+        # Temporary fix for the resonator readout qua element to have a name
         return f"{self.parent.name}.resonator"
 
     @property

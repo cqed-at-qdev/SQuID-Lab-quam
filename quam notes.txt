@@ -4,12 +4,10 @@ get_reference() with argument, might want to return error if argument doesn't ex
 
 given a reference string, how do we access the component in QuAM?
 
-properties visible in state.json?
+properties optionally visible in state.json?
 
 Non-local components, e.g. network settings
 
-Loading using base quam, i.e. by automatically detecting and importing relevant QuAM root module
+Manually setting Channel names ✓
 
-Manually setting channel names 
-
-Using Literal in components seems to fail type checking
+octave configs with multiple octaves

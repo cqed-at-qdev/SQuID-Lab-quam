@@ -33,11 +33,14 @@ class FlatTopCosinePulse(Pulse):
     amplitude: float
     axis_angle: float = None
     flat_length: int = 0
-    return_part: Literal["all", "flat", "rise"] = "all"
+    return_part: Literal["all", "fall", "rise"] = "all"
 
     @property
     def rise_fall_length(self):
-        return (self.length - self.flat_length) // 2
+        if self.return_part == "all":
+            return (self.length - self.flat_length) // 2
+        else:
+            return self.length
 
     def waveform_function(self):
         from qualang_tools.config.waveform_tools import flattop_cosine_waveform

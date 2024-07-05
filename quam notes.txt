@@ -11,3 +11,5 @@ Non-local components, e.g. network settings
 Manually setting Channel names ✓
 
 octave configs with multiple octaves
+
+Attributes that are not saved 

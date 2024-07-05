@@ -1,4 +1,5 @@
 import os
+from datetime import datetime
 from pathlib import Path
 from typing import Iterable, Literal
 
@@ -39,6 +40,25 @@ class Information(QuamComponent):
         )
 
 
+@quam_dataclass
+class QuamMetadata(QuamComponent):
+
+    unit: str = None
+    long_name: str = None
+    description: str = None
+    last_updated: str = str(datetime.now())
+    uncertainty: float = None
+
+    def update_last_updated(self):
+        """Update the last_updated field to the current time"""
+        self.last_updated = str(datetime.now())
+
+    def value(self):
+        metadata_name = self.parent.get_attr_name(self)
+        value_name = metadata_name.split("__")[-1]
+        return self.parent.get_attr_value(value_name)
+
+
 def data_path_from_device_name(
     device_name: str,
     data_folder_path: Path,
@@ -50,7 +70,7 @@ def data_path_from_device_name(
     main_drive_paths is a list of possible main drive paths, .e.g.,
     the UCPH N:drive has different paths on different computers.
     The first existing path is used.
-    If the device name contains '/' or '\', the path is split into subfolders.
+    If the device name contains '/' or '\ ', the path is split into subfolders.
 
     Args:
         device_name (str): name of the device

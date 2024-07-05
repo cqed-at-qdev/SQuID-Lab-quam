@@ -58,12 +58,12 @@ class Transmon(QuamComponent):
         )
     )
 
-    thermalization_time_factor: int = 5  # exp(-5) = 0.0067
+    thermalization_time_factor: int = 5
     thermalization_time_factor__metadata: QuamMetadata = field(
         default_factory=lambda: QuamMetadata(
             unit="int",
             long_name="Thermalization time factor",
-            description="Factor to multiply the T1 time in cooldown qubit resets",
+            description="Factor to multiply the T1 time in cooldown qubit resets. exp(-5) = 0.0067",
         )
     )
 

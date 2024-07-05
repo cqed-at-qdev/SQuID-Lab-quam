@@ -145,6 +145,7 @@ class PulseSetDragGaussian(PulseSet):
 
 @quam_dataclass
 class PulseSetFlattopCosine(PulseSet):
+    # TODO: Currently this flattop pulse has incorrect shape, i.e., 2 points at peak
 
     PulseClass: ClassVar[str] = "squid_lab_quam.components.pulses.FlatTopCosinePulse"
     gates: ClassVar[Iterable[str]] = ("rise", "fall")
@@ -153,27 +154,34 @@ class PulseSetFlattopCosine(PulseSet):
     rise_fall_time: int
 
     @property
-    def individual_pulse_parameters(self):
+    def negative_amplitude(self) -> float:
+        return -self.amplitude
+
+    @property
+    def individual_pulse_parameters(self) -> dict:
         return {
             "rise": {
                 "return_part": "rise",
+                "amplitude": self.get_reference("amplitude"),
             },
             "fall": {
-                "return_part": "fall",
+                "return_part": "rise",  # rise here, because we implement fall with a negative rise + sticky element
+                "amplitude": self.get_reference("negative_amplitude"),
             },
+            # TODO: we should use a reversed negative fall, instead of negative rise. For cosine pulse, this this is not a problem, but for other pulses it might be.
         }
 
     @property
-    def shared_pulse_parameters(self):
+    def shared_pulse_parameters(self) -> dict:
         return {
             "length": self.get_reference("rise_fall_time"),
-            "amplitude": self.get_reference("amplitude"),
         }
 
-    def play_flattop(self, plateau_duration: int):
+    def play_flattop(self, plateau_duration: int) -> None:
         """Synethesize a flattop pulse with a given plateau duration.
         Note: only works if the element is sticky."""
         # TODO: add support for amplitude scaling
-        qua.play(pulse=f"rise_{self.pulse_name}", element=self.channel.name)
-        qua.wait(plateau_duration, self.channel.name)
-        qua.play(pulse=f"fall_{self.pulse_name}", element=self.channel.name)
+        # TODO: make this function more general, so it can be used for other pulse shapes as well
+        self.channel.play(f"rise_{self.pulse_name}")
+        self.channel.wait(plateau_duration)
+        self.channel.play(f"fall_{self.pulse_name}")

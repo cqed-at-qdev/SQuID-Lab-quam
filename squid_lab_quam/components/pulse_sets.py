@@ -61,7 +61,7 @@ class PulseSet(QuamComponent):
 
         for pulse in self.gates:
             parameters = (
-                self.individual_pulse_parameters[pulse] | self.shared_pulse_parameters
+                self.shared_pulse_parameters | self.individual_pulse_parameters[pulse]
             )
 
             self.channel.operations[f"{pulse}_{self.pulse_name}"] = self.Pulse(

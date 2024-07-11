@@ -11,13 +11,19 @@ from squid_lab_quam.utils import key_from_parent_dict
 
 
 @quam_dataclass
-class Transmon(QuamComponent):
+class ScQubit(QuamComponent):
     """
-    Example QuAM component for a transmon qubit.
+    SQuID Lab QuAM component for a superconducting qubit.
 
     Args:
-        thermalization_time (int): An integer.
-        T1 (str): A string.
+        id (Union[int, str]): The qubit ID. If int, it is converted to a string.
+        xy (IQChannel): The IQ channel for the qubit.
+        resonator (ReadoutResonator): The readout resonator for the qubit.
+        transition_frequencies (list[float]): The transition frequencies of the qubit in Hz.
+        T1 (int): The qubit decay rate in seconds.
+        T2ramsey (int): The dephasing time as measured by a Ramsey experiment in seconds.
+        T2echo (int): The dephasing time as measured by an echo experiment in seconds.
+        thermalization_time_factor (int): Factor to multiply the T1 time in cooldown qubit resets.
     """
 
     id: Union[int, str] = "#./id_from_parent_dict"
@@ -32,7 +38,7 @@ class Transmon(QuamComponent):
             long_name="Transition frequencies",
             description="Transition frequencies of the qubit in the form [f01, f12, ...]",
         )
-    )  # TODO: consider if list is convinient or if we should have separate fields
+    )  # TODO: consider if list is convenient or if we should have separate fields
 
     T1: int = None
     T1__metadata: QuamMetadata = field(

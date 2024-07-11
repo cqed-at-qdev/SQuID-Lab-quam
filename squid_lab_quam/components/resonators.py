@@ -80,10 +80,20 @@ class ReadoutResonator(QuamComponent):
         )
     )
 
+    def __post_init__(self):
+        if self.channel.id is None:
+            self.channel.id = "#../default_resonator_channel_id"
+
+        # if self.channel.RF_frequency is None:
+        #     self.channel.RF_frequency = self.frequency_bare
+
     @property
-    def name(self):
-        # Temporary fix for the resonator readout qua element to have a name
+    def default_resonator_channel_id(self):
         return f"{self.parent.name}.resonator"
+
+    # @property
+    # def name(self):
+    #     return f"{self.parent.name}.resonator"
 
     @property
     def readout_frequency(self):

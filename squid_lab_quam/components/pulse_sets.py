@@ -17,11 +17,11 @@ class PulseSet(QuamComponent):
 
     PulseClass: str
     gates: Iterable[str]
-    pulse_name: str = "#./_id_from_parent_dict"
+    pulse_name: str = "#./_name_from_parent_dict"
     channel: Channel = "#../../xy"
 
     @property
-    def _id_from_parent_dict(self) -> str:
+    def _name_from_parent_dict(self) -> str:
         return str(key_from_parent_dict(self))
 
     @property

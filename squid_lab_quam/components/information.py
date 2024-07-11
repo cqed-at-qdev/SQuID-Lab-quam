@@ -1,3 +1,4 @@
+import json
 import os
 from datetime import datetime
 from pathlib import Path
@@ -6,7 +7,12 @@ from typing import Iterable, Literal
 from quam.core import QuamComponent, quam_dataclass
 
 FRIDGES = ("meso", "archi", "T5", "T3", "T2")
+
+
 N_DRIVE_PATHS = (Path("N:"), Path("unicph.domain\groupdir"))
+SUBJECT_ID_DATABASE = Path(
+    r"N:\SCI-NBI-QDev\SQuID Lab Data\Devices\name_ID_mapping.json"
+)
 
 
 @quam_dataclass
@@ -38,6 +44,10 @@ class Information(QuamComponent):
             main_drive_paths=N_DRIVE_PATHS,
             main_drive_name="N:drive",
         )
+
+    @property
+    def device_subjectID(self) -> str:
+        return subjectID_from_database(self.device_name, SUBJECT_ID_DATABASE)
 
 
 @quam_dataclass
@@ -122,6 +132,34 @@ def data_path_from_device_name(
         )
 
     return str(main_drive_path / data_folder_path / Path(device_name) / "OPX Data")
+
+
+def subjectID_from_database(device_name: str, database_path: Path) -> str:
+    """Get the NQCP subject ID from the device name database.
+    See https://dev.azure.com/NQCP/NQCP/_wiki/wikis/NQCP.wiki/133/SubjectID for more information.
+
+    Args:
+        device_name (str): Name of the device
+        database_path (Path): Path to the database file
+
+    Raises:
+        FileNotFoundError: If the database file is not found
+        ValueError: If the device name is not found in the database
+
+    Returns:
+        str: NQCP Subject ID
+    """
+    if not os.path.exists(database_path):
+        raise FileNotFoundError(f"Database file not found at {database_path}")
+
+    with open(SUBJECT_ID_DATABASE, "r") as f:
+        database = json.load(f)
+        if device_name not in database:
+            raise ValueError(
+                f"Device name {device_name} not found in database at {database_path}"
+            )
+
+    return database[device_name]
 
 
 def bold_font(text: str) -> str:

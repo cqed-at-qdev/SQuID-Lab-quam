@@ -110,14 +110,21 @@ class PulseSetDragGaussian(PulseSet):
         )
     )
 
-    sigma: float
-    sigma__metadata: QuamMetadata = field(
+    sigma_to_length_ratio: float = 0.25
+    sigma_to_length_ratio__metadata: QuamMetadata = field(
         default_factory=lambda: QuamMetadata(
-            unit="ns",
-            long_name="Pulse sigma",
-            description="Width of the Gaussian waveform pulse.",
+            long_name="Sigma to length ratio",
+            description="Ratio of the pulse sigma to the pulse length.",
         )
     )
+    # sigma: float
+    # sigma__metadata: QuamMetadata = field(
+    #     default_factory=lambda: QuamMetadata(
+    #         unit="ns",
+    #         long_name="Pulse sigma",
+    #         description="Width of the Gaussian waveform pulse.",
+    #     )
+    # )
 
     phase_x: float = 0
     phase_x__metadata: QuamMetadata = field(
@@ -172,6 +179,10 @@ class PulseSetDragGaussian(PulseSet):
     )
 
     digital_marker: Union[str, List[Tuple[int, int]]] = None
+
+    @property
+    def sigma(self):
+        return self.sigma_to_length_ratio * self.length
 
     @property
     def amplitude_m90(self):

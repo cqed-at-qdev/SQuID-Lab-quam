@@ -5,7 +5,7 @@ from qm import QuantumMachine
 from qm.QuantumMachinesManager import QuantumMachinesManager
 from quam.components.channels import InOutIQChannel, IQChannel
 from quam.components.pulses import SquareReadoutPulse
-from quam.core import QuamRoot, quam_dataclass
+from quam.core import QuamDict, QuamRoot, quam_dataclass
 
 from squid_lab_quam.components.information import Information
 from squid_lab_quam.components.network import OPXNetwork
@@ -37,7 +37,7 @@ class SQuIDRoot1(QuamRoot):
     network: OPXNetwork = field(default_factory=OPXNetwork)
     information: Information = field(default_factory=Information)
     qubits: Dict[str, ScQubit] = field(default_factory=dict)
-    shared_qubit_parameters: dict = field(default_factory=dict)
+    shared_qubit_parameters: QuamDict = field(default_factory=dict)
     octaves: Dict[str, OctaveSQuID] = field(default_factory=dict)
 
     _qm: ClassVar[QuantumMachine] = None
@@ -186,8 +186,8 @@ class SQuIDRoot1(QuamRoot):
         machine.shared_qubit_parameters = {
             "drag_gaussian_pulse_parameters": {
                 "length": gate_length,
-                "sigma": gate_length / 4,
                 "subtracted": True,
+                "sigma_to_length_ratio": 0.2,
             },
         }
 
@@ -226,10 +226,16 @@ class SQuIDRoot1(QuamRoot):
                 "drag_gaussian": PulseSetDragGaussian(
                     amplitude_180=pi_pulse_amplitude,
                     amplitude_90=pi_pulse_amplitude / 2,
-                    sigma="#/shared_qubit_parameters/drag_gaussian_pulse_parameters/sigma",
-                    length="#/shared_qubit_parameters/drag_gaussian_pulse_parameters/length",
-                    subtracted="#/shared_qubit_parameters/drag_gaussian_pulse_parameters/subtracted",
+                    length=machine.shared_qubit_parameters[
+                        "drag_gaussian_pulse_parameters"
+                    ].get_reference("length"),
+                    subtracted=machine.shared_qubit_parameters[
+                        "drag_gaussian_pulse_parameters"
+                    ].get_reference("subtracted"),
                     anharmonicity="#../../anharmonicity",
+                    sigma_to_length_ratio=machine.shared_qubit_parameters[
+                        "drag_gaussian_pulse_parameters"
+                    ].get_reference("sigma_to_length_ratio"),
                 ),
                 "flattop_cosine": PulseSetFlattopCosine(
                     amplitude=0.4,

@@ -27,7 +27,7 @@ class Information(QuamComponent):
     fridge_name: Literal["meso", "archi", "T5", "T3", "T2"] = None
     state_path: str = None
     data_path: str = "#./squid_lab_data_path"
-    calibration_db_path: str = "#./state_path"
+    calibration_db_path: str = "#./parent_of_state_path"
 
     def print_info(self):
         name = (
@@ -38,6 +38,10 @@ class Information(QuamComponent):
         print(f"User name: {bold_font(name)}")
         print(f"Device name: {bold_font(self.device_name)}")
         print(f"Fridge name: {bold_font(self.fridge_name)}")
+
+    @property
+    def parent_of_state_path(self) -> str:
+        return str(Path(self.state_path).parent)
 
     @property
     def squid_lab_data_path(self) -> str:

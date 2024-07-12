@@ -35,8 +35,8 @@ class SQuIDRoot1(QuamRoot):
     wiring: OPXWiring = field(default_factory=OPXWiring)
     network: OPXNetwork = field(default_factory=OPXNetwork)
     information: Information = field(default_factory=Information)
-    qubits: Dict[str, ScQubit] = field(default_factory=dict)
-    shared_qubit_parameters: QuamDict = field(default_factory=dict)
+    qubits: dict[str, ScQubit] = field(default_factory=dict)
+    shared_qubit_parameters: dict = field(default_factory=dict)
     octaves: Dict[str, OctaveSQuID] = field(default_factory=dict)
 
     _qm: ClassVar[QuantumMachine] = None

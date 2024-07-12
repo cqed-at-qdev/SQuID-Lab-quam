@@ -1,8 +1,7 @@
 from dataclasses import field
 from typing import ClassVar, Dict, Sequence
 
-from qm import QuantumMachine
-from qm.QuantumMachinesManager import QuantumMachinesManager
+from qm import QuantumMachine, QuantumMachinesManager
 from quam.components.channels import InOutIQChannel, IQChannel
 from quam.components.pulses import SquareReadoutPulse
 from quam.core import QuamDict, QuamRoot, quam_dataclass

@@ -6,6 +6,8 @@ from typing import Iterable, Literal
 
 from quam.core import QuamComponent, quam_dataclass
 
+__all__ = ["Information", "QuamMetadata"]
+
 FRIDGES = ("meso", "archi", "T5", "T3", "T2")
 
 
@@ -60,33 +62,86 @@ class QuamMetadata(QuamComponent):
     last_updated: str = str(datetime.now())
     uncertainty: float = None
 
+    def __post_init__(self) -> None:
+        super().__post_init__()
+        self._initial_info = self.__dict__.copy()  # copy of the initial info
+
     def update_last_updated(self):
         """Update the last_updated field to the current time"""
         self.last_updated = str(datetime.now())
 
     @property
     def name(self) -> str:
-        name = self.parent.get_attr_name(self)
-        if not name.endswith("__metadata"):
-            raise ValueError(
-                f"Metadata parameter name {name} does not end with '__metadata'"
-            )
+        # name = self.parent.get_attr_name(self)
+        # if not name.endswith("__metadata"):
+        #     raise ValueError(
+        #         f"Metadata parameter name {name} does not end with '__metadata'"
+        #     )
+        # return name
 
-        return name
+        return get_quam_info_name(self)
 
     @property
     def parameter_name(self) -> str:
-        return self.name.split("__")[0]
+        return self.name.removesuffix("__metadata")
 
     @property
     def value(self):
         return getattr(self.parent, self.parameter_name)
 
     @classmethod
-    def get_metadata(self, component: QuamComponent, attr: str) -> "QuamMetadata":
+    def get_metadata(cls, component: QuamComponent, attr: str) -> "QuamMetadata":
         """Get the metadata object for an attribute of a component"""
         metadata_name = f"{attr}__metadata"
         return getattr(component, metadata_name)
+
+    def print_info(self, include_updates: bool = True):
+        print(get_info_str(self, include_updates))
+
+    def get_info_str(self, include_updates: bool = True):
+        return get_info_str(self, include_updates)
+
+
+def get_info_str(info: QuamMetadata, include_updates: bool = True):
+    """
+    Wanted print format, self.print_info():
+        [value_nanme] ([long_name/optional]): [value] (±[uncertainty/optional]) [unit/optional] - [last_update/optional]
+        f_01 (Qubit Frequency (01)): 5.1 ± 0.1 GHz - 2021-09-02
+
+    Wnated print format, self.print_info(include_updates=True):
+        [value_nanme] ([long_name/optional]): [value] (±[uncertainty/optional]) [unit/optional] - [last_update/optional]
+        f_01 (Qubit Frequency (01)): 5.1 ± 0.1 GHz - 2021-09-02
+            value: 5.0 ± 0.2 -> 5.1 ± 0.1
+            last_update: 2021-09-01 -> 2021-09-02
+
+    """
+    # Construct the base output string with checks for optional fields
+    base_output = f"{info.parameter_name}"
+
+    base_output += f" ({info.long_name})" if info.long_name else ""
+    base_output += f": {info.value}"
+    base_output += f" ± {info.uncertainty}" if info.uncertainty is not None else ""
+    base_output += f" {info.unit}" if info.unit else ""
+    base_output += f" - {info.last_updated}" if info.last_updated else ""
+
+    # Include updates if requested
+    if include_updates:
+        for key, value in info.__dict__.items():
+            if key in info._initial_info and info._initial_info[key] != value:
+                initial_value = (
+                    info._initial_info[key] or "None"
+                )  # Handle None for initial value
+                updated_value = value or "None"  # Handle None for updated value
+                base_output += f"\n\t{key}: {initial_value} -> {updated_value}"
+
+    return base_output
+
+
+def get_quam_info_name(info):
+    for key, value in info.parent.__dict__.items():
+        if value == info:
+            return key
+    raise ValueError("info should be a QuamMetadata object")
 
 
 def data_path_from_device_name(
@@ -173,3 +228,17 @@ def bold_font(text: str) -> str:
         str: the bold text
     """
     return f"\033[1m{text}\033[0m"
+
+
+if __name__ == "__main__":
+    from squid_lab_quam.components.roots import SQuIDRoot1
+
+    quam = SQuIDRoot1()
+    quam.test__metadata = QuamMetadata(unit="GHz", long_name="Qubit Frequency (01)")
+    quam.test = 5.1
+
+    quam.test__metadata.print_info()
+    print()
+
+    quam.test__metadata.unit = "MHz"
+    quam.test__metadata.print_info()

@@ -1,7 +1,8 @@
 from dataclasses import field
 from typing import Tuple, Union
 
-from qm.qua._dsl import AmpValuesType, QuaVariableType
+from qm.qua._dsl_specific_type_hints import AmpValuesType
+from qm.qua._expressions import QuaVariableType
 from quam.components.channels import InOutIQChannel
 from quam.core import QuamComponent, quam_dataclass
 

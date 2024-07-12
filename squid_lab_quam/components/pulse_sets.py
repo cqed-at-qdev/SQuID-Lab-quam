@@ -2,7 +2,6 @@ from abc import abstractmethod
 from dataclasses import field
 from typing import ClassVar, Iterable, List, Tuple, Type, Union
 
-import qm.qua as qua
 from quam.components.channels import Channel
 from quam.components.pulses import Pulse
 from quam.core import QuamComponent, quam_dataclass

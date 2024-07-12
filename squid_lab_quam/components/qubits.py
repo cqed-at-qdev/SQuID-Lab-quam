@@ -1,13 +1,20 @@
 from dataclasses import field
-from typing import Union
+from typing import Literal, Tuple, Union
 
+from qm.qua import align
+from qm.qua._dsl_specific_type_hints import AmpValuesType
+from qm.qua._expressions import QuaVariableType
 from quam.components.channels import IQChannel
 from quam.core import QuamComponent, quam_dataclass
 
+from squid_lab_quam.components.flux_line import FluxLine
 from squid_lab_quam.components.information import QuamMetadata
 from squid_lab_quam.components.pulse_sets import PulseSet
 from squid_lab_quam.components.resonators import ReadoutResonator
+from squid_lab_quam.quam_macros.qubit_macros import reset_qubit
 from squid_lab_quam.utils import key_from_parent_dict
+
+__all__ = ["ScQubit", "FluxtunebleTransmon"]
 
 
 @quam_dataclass
@@ -128,3 +135,105 @@ class ScQubit(QuamComponent):
             )
 
         self.pulse_sets[gate_shape].set_as_default_gate_shape()
+
+    def __matmul__(self, other):
+        if not isinstance(other, ScQubit):
+            raise ValueError(
+                "Cannot create a qubit pair (q1 @ q2) with a non-qubit object, "
+                f"where q1={self} and q2={other}"
+            )
+
+        if self is other:
+            raise ValueError(
+                "Cannot create a qubit pair with same qubit (q1 @ q1), where q1={self}"
+            )
+
+        for qubit_pair in self._root.qubit_pairs:
+            if qubit_pair.qubit_control is self and qubit_pair.qubit_target is other:
+                return qubit_pair
+
+        raise ValueError(
+            "Qubit pair not found: qubit_control={self.name}, "
+            "qubit_target={other.name}"
+        )
+
+    def measure(
+        self,
+        pulse_name: str,
+        amplitude_scale: Union[float, AmpValuesType] = None,
+        qua_vars: Tuple[QuaVariableType, QuaVariableType] = None,
+        stream=None,
+    ):
+        return self.resonator.measure(
+            pulse_name=pulse_name,
+            amplitude_scale=amplitude_scale,
+            qua_vars=qua_vars,
+            stream=stream,
+        )
+
+    def reset(
+        self,
+        reset_method: Literal[
+            "active", "cooldown", None
+        ] = "active",  # | Callable[Concatenate["Qubit", ...], None]
+        readout_pulse: str = "flattop",
+        max_tries: int = 10,
+        threshold_g: float | None = None,
+        relaxation_time: float | None = None,
+        save: bool = True,
+    ):
+        """Reset a qubit. This function is called to reset the qubit after a measurement.
+
+        Args:
+            reset_method (Literal["active", "cooldown", None] | Callable[Concatenate[Qubit, ...], None], optional): The method to use to reset the qubit. Defaults to "active".
+            readout_pulse (str, optional): Pulse shape to use for the readout pulse. Defaults to "flattop".
+            max_tries (int, optional): The maximum number of tries to reset the qubit. Defaults to 10.
+            threshold_g (float | None, optional): The threshold to use for the readout pulse. Defaults to None.
+            relaxation_time (float | None, optional): The time to wait for the resonator to relax. Defaults to None.
+            save (bool, optional): Whether to save the number of pulses applied. Defaults to True.
+        """
+        return reset_qubit(
+            self,
+            reset_method=reset_method,
+            readout_pulse=readout_pulse,
+            max_tries=max_tries,
+            threshold_g=threshold_g,
+            relaxation_time=relaxation_time,
+            save=save,
+        )
+
+    def align(self, *elements):
+        """Align the qubit to other elements."""
+        align(self.xy.name, *elements)
+
+    def align_resonator(self, *elements):
+        """Align the qubit to other elements and its resonator."""
+        align(self.xy.name, self.resonator.name, *elements)
+
+    def wait(self, duration, *elements):
+        """Wait for a duration."""
+        self.align(*elements)
+        self.xy.wait(duration)
+
+
+@quam_dataclass
+class FluxtunebleTransmon(ScQubit):
+    """
+    SQuID Lab QuAM component for a flux-tuneable transmon qubit.
+
+    Args:
+        id (Union[int, str]): The qubit ID. If int, it is converted to a string.
+        xy (IQChannel): The IQ channel for the qubit.
+        z (FluxLine): The flux channel for the qubit.
+        resonator (ReadoutResonator): The readout resonator for the qubit.
+        transition_frequencies (list[float]): The transition frequencies of the qubit in Hz.
+        T1 (int): The qubit decay rate in seconds.
+        T2ramsey (int): The dephasing time as measured by a Ramsey experiment in seconds.
+        T2echo (int): The dephasing time as measured by an echo experiment in seconds.
+        thermalization_time_factor (int): Factor to multiply the T1 time in cooldown qubit resets.
+
+    """
+
+    z: FluxLine = None
+
+    "TODO: Add flux functions to FluxtunebleTransmon"

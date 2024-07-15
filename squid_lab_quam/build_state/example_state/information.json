@@ -1,0 +1,11 @@
+{
+    "information": {
+        "user_name": "Jacob Hastrup",
+        "user_ku_tag": "drn455",
+        "device_name": "QuantWare/soprano_v3",
+        "fridge_name": "T5",
+        "state_path": "C:/Users/drn455/Documents/GitHub/SQuID-Lab-quam/squid_lab_quam/build_state/example_state",
+        "data_path": "#./squid_lab_data_path",
+        "calibration_db_path": "#./parent_of_state_path"
+    }
+}

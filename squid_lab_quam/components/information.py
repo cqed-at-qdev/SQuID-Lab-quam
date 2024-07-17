@@ -1,5 +1,6 @@
 import json
 import os
+import warnings
 from datetime import datetime
 from pathlib import Path
 from typing import Iterable, Literal
@@ -25,6 +26,7 @@ class Information(QuamComponent):
     user_ku_tag: str = None
     device_name: str = None
     fridge_name: Literal["meso", "archi", "T5", "T3", "T2"] = None
+    project_name: str = "#./user_name"
     state_path: str = None
     data_path: str = "#./squid_lab_data_path"
     calibration_db_path: str = "#./parent_of_state_path"
@@ -45,12 +47,16 @@ class Information(QuamComponent):
 
     @property
     def squid_lab_data_path(self) -> str:
-        return data_path_from_device_name(
-            self.device_name,
-            data_folder_path=Path("SCI-NBI-QDev\SQuID Lab Data\Devices"),
-            main_drive_paths=N_DRIVE_PATHS,
-            main_drive_name="N:drive",
-        )
+        """path of the type N:\SCI-NBI-QDev\SQuID Lab Data\Devices\DEVICE_NAME\PROJECT_NAME\OPX Data"""
+
+        data_path = N_drive_section_path(N_DRIVE_PATHS, "SCI-NBI-QDev")
+        data_path /= Path("SQuID Lab Data\Devices")
+        data_path /= Path(self.device_name)
+        data_path /= Path(self.project_name)
+        data_path /= Path("OPX Data")
+        if not os.path.exists(data_path):
+            os.makedirs(data_path)
+        return str(data_path)
 
     @property
     def device_subjectID(self) -> str:
@@ -112,7 +118,7 @@ def get_info_str(info: QuamMetadata, include_updates: bool = True):
         [value_nanme] ([long_name/optional]): [value] (±[uncertainty/optional]) [unit/optional] - [last_update/optional]
         f_01 (Qubit Frequency (01)): 5.1 ± 0.1 GHz - 2021-09-02
 
-    Wnated print format, self.print_info(include_updates=True):
+    Wanted print format, self.print_info(include_updates=True):
         [value_nanme] ([long_name/optional]): [value] (±[uncertainty/optional]) [unit/optional] - [last_update/optional]
         f_01 (Qubit Frequency (01)): 5.1 ± 0.1 GHz - 2021-09-02
             value: 5.0 ± 0.2 -> 5.1 ± 0.1
@@ -148,50 +154,40 @@ def get_quam_info_name(info):
     raise ValueError("info should be a QuamMetadata object")
 
 
-def data_path_from_device_name(
-    device_name: str,
-    data_folder_path: Path,
-    main_drive_paths: Iterable[Path],
-    main_drive_name: str,
-) -> str:
-    """Generates a data path from a device name of the form:
-    main_drive_path / data_folder_path / device_name / "OPX Data" .
-    main_drive_paths is a list of possible main drive paths, .e.g.,
-    the UCPH N:drive has different paths on different computers.
-    The first existing path is used.
-    If the device name contains '/' or '\ ', the path is split into subfolders.
+def N_drive_section_path(n_drive_paths: Iterable[Path], section: str) -> Path:
+    """Get the N: drive path from a list of possible paths.
 
     Args:
-        device_name (str): name of the device
-        data_folder_path (Path): path to the data folder from the main drive
-        main_drive_paths (Iterable[Path]): list of possible main drive paths
-        main_drive_name (str): name of the main drive (used for error message)
+        n_drive_paths (Iterable[Path]): list of possible N: drive paths
+        section (str): section within the N:drive of the path to get, e.g., "SCI-NBI-QDev" or "SCI-NBI-NQCP"
 
-    Returns:
-        str: the data path
+    Returns: Path, e.g. N:\SCI-NBI_QDev
+    """
+    path = N_drive_path(n_drive_paths) / Path(section)
+    if not os.path.exists(path):
+        raise FileNotFoundError(
+            f"Could not find {path}. Ensure that you have access to {section}"
+        )
+    return path
+
+
+def N_drive_path(n_drive_paths: Iterable[Path]) -> Path:
+    """Get the first existing N: drive path from a list of possible paths.
+    E.g., the UCPH N:drive has different paths on different computers.
+
+    Args:
+        n_drive_paths (Iterable[Path]): list of possible N: drive paths
 
     Raises:
-        FileNotFoundError: if the main drive path is not found
-        FileNotFoundError: if the data folder path is not found
+        FileNotFoundError: If none of the paths are found
+
+    Returns:
+        Path: _description_
     """
-
-    def _get_main_drive_path() -> Path:
-        if not any(os.path.exists(drive_path) for drive_path in main_drive_paths):
-            raise FileNotFoundError(
-                f"Could not find data path. {main_drive_name} not found"
-            )
-        return next(
-            drive_path for drive_path in N_DRIVE_PATHS if os.path.exists(drive_path)
-        )
-
-    main_drive_path = _get_main_drive_path()
-
-    if not os.path.exists(main_drive_path / data_folder_path):
-        raise FileNotFoundError(
-            f"Could not find data path. {data_folder_path} not found. Ensure that you have access to {data_folder_path}"
-        )
-
-    return str(main_drive_path / data_folder_path / Path(device_name) / "OPX Data")
+    for path in n_drive_paths:
+        if os.path.exists(path):
+            return path
+    raise FileNotFoundError(f"Could not find any of the paths {n_drive_paths}")
 
 
 def subjectID_from_database(device_name: str, database_path: Path) -> str:
@@ -204,7 +200,6 @@ def subjectID_from_database(device_name: str, database_path: Path) -> str:
 
     Raises:
         FileNotFoundError: If the database file is not found
-        ValueError: If the device name is not found in the database
 
     Returns:
         str: NQCP Subject ID
@@ -215,9 +210,10 @@ def subjectID_from_database(device_name: str, database_path: Path) -> str:
     with open(SUBJECT_ID_DATABASE, "r") as f:
         database = json.load(f)
         if device_name not in database:
-            raise ValueError(
+            warnings.warn(
                 f"Device name {device_name} not found in database at {database_path}"
             )
+            return None
 
     return database[device_name]
 
@@ -238,11 +234,12 @@ if __name__ == "__main__":
     from squid_lab_quam.components.roots import SQuIDRoot1
 
     quam = SQuIDRoot1()
-    quam.test__metadata = QuamMetadata(unit="GHz", long_name="Qubit Frequency (01)")
-    quam.test = 5.1
+    quam.information = Information(
+        user_name="Jacob Hastrup",
+        device_name="QuantWare/soprano_v1",
+        project_name="Testing data paths",
+    )
 
-    quam.test__metadata.print_info()
-    print()
+    quam.information.data_path
 
-    quam.test__metadata.unit = "MHz"
-    quam.test__metadata.print_info()
+    quam.information.device_subjectID

@@ -3,7 +3,7 @@ import os
 import warnings
 from datetime import datetime
 from pathlib import Path
-from typing import Iterable, Literal
+from typing import Iterable, Literal, Optional
 
 from quam.core import QuamComponent, quam_dataclass
 
@@ -26,7 +26,7 @@ class Information(QuamComponent):
     user_ku_tag: str = None
     device_name: str = None
     fridge_name: Literal["meso", "archi", "T5", "T3", "T2"] = None
-    project_name: str = "#./user_name"
+    project_name: Optional[str] = "#./user_name"
     state_path: str = None
     data_path: str = "#./squid_lab_data_path"
     calibration_db_path: str = "#./parent_of_state_path"
@@ -52,7 +52,8 @@ class Information(QuamComponent):
         data_path = N_drive_section_path(N_DRIVE_PATHS, "SCI-NBI-QDev")
         data_path /= Path("SQuID Lab Data\Devices")
         data_path /= Path(self.device_name)
-        data_path /= Path(self.project_name)
+        if self.project_name is not None:
+            data_path /= Path(self.project_name)
         data_path /= Path("OPX Data")
         if not os.path.exists(data_path):
             os.makedirs(data_path)

@@ -12,7 +12,7 @@ __all__ = ["Information", "QuamMetadata"]
 FRIDGES = ("meso", "archi", "T5", "T3", "T2")
 
 
-N_DRIVE_PATHS = (Path("N:"), Path("unicph.domain\groupdir"))
+N_DRIVE_PATHS = (Path("N:"), Path(r"\\unicph.domain\groupdir"))
 SUBJECT_ID_DATABASE = Path(
     r"N:\SCI-NBI-QDev\SQuID Lab Data\Devices\name_ID_mapping.json"
 )

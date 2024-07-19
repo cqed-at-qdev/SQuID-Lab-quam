@@ -92,9 +92,9 @@ class ReadoutResonator(QuamComponent):
     def default_resonator_channel_id(self):
         return f"{self.parent.name}.resonator"
 
-    # @property
-    # def name(self):
-    #     return f"{self.parent.name}.resonator"
+    @property
+    def name(self):
+        return self.channel.name
 
     @property
     def readout_frequency(self):

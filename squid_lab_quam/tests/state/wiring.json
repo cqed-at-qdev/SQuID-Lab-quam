@@ -1,77 +1,35 @@
 {
-    "wiring": {
-        "drive_lines": {
-            "q0": {
-                "port_I": [
-                    "con1",
-                    3
-                ],
-                "port_Q": [
-                    "con1",
-                    4
-                ]
-            },
-            "q1": {
-                "port_I": [
-                    "con1",
-                    5
-                ],
-                "port_Q": [
-                    "con1",
-                    6
-                ]
-            },
-            "q2": {
-                "port_I": [
-                    "con1",
-                    7
-                ],
-                "port_Q": [
-                    "con1",
-                    8
-                ]
-            },
-            "q3": {
-                "port_I": [
-                    "con1",
-                    9
-                ],
-                "port_Q": [
-                    "con1",
-                    10
-                ]
-            },
-            "q4": {
-                "port_I": [
-                    "con1",
-                    9
-                ],
-                "port_Q": [
-                    "con1",
-                    10
-                ]
-            }
-        },
-        "feed_lines": {
-            "feedline": {
-                "output_I": [
-                    "con1",
-                    1
-                ],
-                "output_Q": [
-                    "con1",
-                    2
-                ],
-                "input_I": [
-                    "con1",
-                    1
-                ],
-                "input_Q": [
-                    "con1",
-                    2
-                ]
-            }
-        },
-        "flux_lines": {}
-    }
+  "wiring": {
+    "drive_lines": {
+      "q0": {
+        "port_I": ["con1", 3],
+        "port_Q": ["con1", 4]
+      },
+      "q1": {
+        "port_I": ["con1", 5],
+        "port_Q": ["con1", 6]
+      },
+      "q2": {
+        "port_I": ["con1", 7],
+        "port_Q": ["con1", 8]
+      },
+      "q3": {
+        "port_I": ["con1", 9],
+        "port_Q": ["con1", 10]
+      },
+      "q4": {
+        "port_I": ["con1", 9],
+        "port_Q": ["con1", 10]
+      }
+    },
+    "feed_lines": {
+      "feedline": {
+        "output_I": ["con1", 1],
+        "output_Q": ["con1", 2],
+        "input_I": ["con1", 1],
+        "input_Q": ["con1", 2]
+      }
+    },
+    "flux_lines": {}
+  }
 }

@@ -145,16 +145,16 @@
                     "opx_output_offset_I": null,
                     "opx_output_offset_Q": null,
                     "frequency_converter_up": "#/octaves/octave1/RF_outputs/1",
-                    "intermediate_frequency": 0.0,
+                    "intermediate_frequency": "#./inferred_intermediate_frequency",
                     "LO_frequency": "#./frequency_converter_up/LO_frequency",
-                    "RF_frequency": "#./inferred_RF_frequency"
+                    "RF_frequency": 5100000000.0
                 },
                 "depletion_time": null,
                 "depletion_time__metadata": {
                     "unit": "ns",
                     "long_name": "Depletion time",
                     "description": "The resonator depletion time",
-                    "last_updated": "2024-07-11 14:29:17.579638",
+                    "last_updated": "2024-07-15 15:52:24.311118",
                     "uncertainty": null
                 },
                 "frequency_bare": null,
@@ -162,7 +162,7 @@
                     "unit": "Hz",
                     "long_name": "Bare frequency",
                     "description": "The bare resonator frequency, i.e., as measured at high power",
-                    "last_updated": "2024-07-11 14:29:17.579638",
+                    "last_updated": "2024-07-15 15:52:24.311118",
                     "uncertainty": null
                 },
                 "frequency_q0": null,
@@ -170,7 +170,7 @@
                     "unit": "Hz",
                     "long_name": "Q0 frequency",
                     "description": "The dispersively shifted resonator frequency with the qubit in state |0\u27e9",
-                    "last_updated": "2024-07-11 14:29:17.579638",
+                    "last_updated": "2024-07-15 15:52:24.311118",
                     "uncertainty": null
                 },
                 "frequency_q1": null,
@@ -178,7 +178,7 @@
                     "unit": "Hz",
                     "long_name": "Q1 frequency",
                     "description": "The dispersively shifted resonator frequency with the qubit in state |1\u27e9",
-                    "last_updated": "2024-07-11 14:29:17.579638",
+                    "last_updated": "2024-07-15 15:52:24.311118",
                     "uncertainty": null
                 },
                 "Q_int": null,
@@ -186,7 +186,7 @@
                     "unit": null,
                     "long_name": "Internal quality factor",
                     "description": "The internal quality factor of the resonator",
-                    "last_updated": "2024-07-11 14:29:17.579638",
+                    "last_updated": "2024-07-15 15:52:24.311118",
                     "uncertainty": null
                 },
                 "Q_ext": null,
@@ -194,14 +194,14 @@
                     "unit": null,
                     "long_name": "External quality factor",
                     "description": "The external quality factor of the resonator",
-                    "last_updated": "2024-07-11 14:29:17.579638",
+                    "last_updated": "2024-07-15 15:52:24.311118",
                     "uncertainty": null
                 },
                 "readout_frequency__metadata": {
                     "unit": "Hz",
                     "long_name": "Readout frequency",
                     "description": "The readout frequency of the resonator",
-                    "last_updated": "2024-07-11 14:29:17.579638",
+                    "last_updated": "2024-07-15 15:52:24.311118",
                     "uncertainty": null
                 }
             },
@@ -213,7 +213,7 @@
                 "unit": "Hz",
                 "long_name": "Transition frequencies",
                 "description": "Transition frequencies of the qubit in the form [f01, f12, ...]",
-                "last_updated": "2024-07-11 14:29:17.579638",
+                "last_updated": "2024-07-15 15:52:24.311118",
                 "uncertainty": null
             },
             "T1": null,
@@ -221,7 +221,7 @@
                 "unit": "s",
                 "long_name": "T1",
                 "description": "Qubit decay rate",
-                "last_updated": "2024-07-11 14:29:17.579638",
+                "last_updated": "2024-07-15 15:52:24.311118",
                 "uncertainty": null
             },
             "T2ramsey": null,
@@ -229,7 +229,7 @@
                 "unit": "s",
                 "long_name": "T2 Ramsey",
                 "description": "Dephasing time as measured by a Ramsey experiment",
-                "last_updated": "2024-07-11 14:29:17.579638",
+                "last_updated": "2024-07-15 15:52:24.311118",
                 "uncertainty": null
             },
             "T2echo": null,
@@ -237,7 +237,7 @@
                 "unit": "s",
                 "long_name": "T2 echo",
                 "description": "Dephasing time as measured by an echo experiment",
-                "last_updated": "2024-07-11 14:29:17.579638",
+                "last_updated": "2024-07-15 15:52:24.311118",
                 "uncertainty": null
             },
             "thermalization_time_factor": 5,
@@ -245,7 +245,7 @@
                 "unit": "int",
                 "long_name": "Thermalization time factor",
                 "description": "Factor to multiply the T1 time in cooldown qubit resets. exp(-5) = 0.0067",
-                "last_updated": "2024-07-11 14:29:17.579638",
+                "last_updated": "2024-07-15 15:52:24.311118",
                 "uncertainty": null
             },
             "pulse_sets": {
@@ -257,7 +257,7 @@
                         "unit": "V",
                         "long_name": "\u03c0/2-pulse peak amplitude",
                         "description": "Amplitude of the \u03c0/2 pulse.",
-                        "last_updated": "2024-07-11 14:29:17.579638",
+                        "last_updated": "2024-07-15 15:52:24.311118",
                         "uncertainty": null
                     },
                     "amplitude_180": 0.5,
@@ -265,7 +265,7 @@
                         "unit": "V",
                         "long_name": "\u03c0-pulse peak amplitude",
                         "description": "Amplitude of the \u03c0 pulse.",
-                        "last_updated": "2024-07-11 14:29:17.579638",
+                        "last_updated": "2024-07-15 15:52:24.311118",
                         "uncertainty": null
                     },
                     "length": "#/shared_qubit_parameters/drag_gaussian_pulse_parameters/length",
@@ -273,15 +273,15 @@
                         "unit": "ns",
                         "long_name": "Pulse length",
                         "description": "Length of the window containing the pulse.",
-                        "last_updated": "2024-07-11 14:29:17.579638",
+                        "last_updated": "2024-07-15 15:52:24.311118",
                         "uncertainty": null
                     },
-                    "sigma": "#/shared_qubit_parameters/drag_gaussian_pulse_parameters/sigma",
-                    "sigma__metadata": {
-                        "unit": "ns",
-                        "long_name": "Pulse sigma",
-                        "description": "Width of the Gaussian waveform pulse.",
-                        "last_updated": "2024-07-11 14:29:17.579638",
+                    "sigma_to_length_ratio": 0.25,
+                    "sigma_to_length_ratio__metadata": {
+                        "unit": null,
+                        "long_name": "Sigma to length ratio",
+                        "description": "Ratio of the pulse sigma to the pulse length.",
+                        "last_updated": "2024-07-15 15:52:24.311118",
                         "uncertainty": null
                     },
                     "phase_x": 0,
@@ -289,7 +289,7 @@
                         "unit": "degree",
                         "long_name": "X-axis phase",
                         "description": "Phase of the pulse in the X-axis.",
-                        "last_updated": "2024-07-11 14:29:17.579638",
+                        "last_updated": "2024-07-15 15:52:24.311118",
                         "uncertainty": null
                     },
                     "phase_y": 90,
@@ -297,7 +297,7 @@
                         "unit": "degree",
                         "long_name": "Y-axis phase",
                         "description": "Phase of the pulse in the Y-axis.",
-                        "last_updated": "2024-07-11 14:29:17.579638",
+                        "last_updated": "2024-07-15 15:52:24.311118",
                         "uncertainty": null
                     },
                     "anharmonicity": "#../../anharmonicity",
@@ -305,7 +305,7 @@
                         "unit": "Hz",
                         "long_name": "Waveform anharmonicity",
                         "description": "Anharmonicity used in the calculation of the DRAG waveform.",
-                        "last_updated": "2024-07-11 14:29:17.579638",
+                        "last_updated": "2024-07-15 15:52:24.311118",
                         "uncertainty": null
                     },
                     "detuning": 0,
@@ -313,7 +313,7 @@
                         "unit": "Hz",
                         "long_name": "Detuning",
                         "description": "Detuning of the pulse from the channel RF frequency.",
-                        "last_updated": "2024-07-11 14:29:17.579638",
+                        "last_updated": "2024-07-15 15:52:24.311118",
                         "uncertainty": null
                     },
                     "alpha": 0,
@@ -321,7 +321,7 @@
                         "unit": null,
                         "long_name": "DRAG coefficient",
                         "description": "Coefficient for the derivative of the pulse.",
-                        "last_updated": "2024-07-11 14:29:17.579638",
+                        "last_updated": "2024-07-15 15:52:24.311118",
                         "uncertainty": null
                     },
                     "subtracted": "#/shared_qubit_parameters/drag_gaussian_pulse_parameters/subtracted",
@@ -329,7 +329,7 @@
                         "unit": null,
                         "long_name": "Subtracted",
                         "description": "Whether the pulse is shifted such that the end points are 0",
-                        "last_updated": "2024-07-11 14:29:17.579638",
+                        "last_updated": "2024-07-15 15:52:24.311118",
                         "uncertainty": null
                     },
                     "digital_marker": null,
@@ -343,7 +343,7 @@
                         "unit": "V",
                         "long_name": "Pulse amplitude",
                         "description": "Peak amplitude of the pulse.",
-                        "last_updated": "2024-07-11 14:29:17.579638",
+                        "last_updated": "2024-07-15 15:52:24.311118",
                         "uncertainty": null
                     },
                     "rise_fall_time": 16,
@@ -351,7 +351,7 @@
                         "unit": "ns",
                         "long_name": "Rise and fall time",
                         "description": "Time taken for the pulse to rise and fall, each the rise and fall parts are each of this duration.",
-                        "last_updated": "2024-07-11 14:29:17.579638",
+                        "last_updated": "2024-07-15 15:52:24.311118",
                         "uncertainty": null
                     },
                     "__class__": "squid_lab_quam.components.pulse_sets.PulseSetFlattopCosine"
@@ -503,16 +503,16 @@
                     "opx_output_offset_I": null,
                     "opx_output_offset_Q": null,
                     "frequency_converter_up": "#/octaves/octave1/RF_outputs/1",
-                    "intermediate_frequency": 0.0,
+                    "intermediate_frequency": "#./inferred_intermediate_frequency",
                     "LO_frequency": "#./frequency_converter_up/LO_frequency",
-                    "RF_frequency": "#./inferred_RF_frequency"
+                    "RF_frequency": 5100000000.0
                 },
                 "depletion_time": null,
                 "depletion_time__metadata": {
                     "unit": "ns",
                     "long_name": "Depletion time",
                     "description": "The resonator depletion time",
-                    "last_updated": "2024-07-11 14:29:17.579638",
+                    "last_updated": "2024-07-15 15:52:24.311118",
                     "uncertainty": null
                 },
                 "frequency_bare": null,
@@ -520,7 +520,7 @@
                     "unit": "Hz",
                     "long_name": "Bare frequency",
                     "description": "The bare resonator frequency, i.e., as measured at high power",
-                    "last_updated": "2024-07-11 14:29:17.579638",
+                    "last_updated": "2024-07-15 15:52:24.311118",
                     "uncertainty": null
                 },
                 "frequency_q0": null,
@@ -528,7 +528,7 @@
                     "unit": "Hz",
                     "long_name": "Q0 frequency",
                     "description": "The dispersively shifted resonator frequency with the qubit in state |0\u27e9",
-                    "last_updated": "2024-07-11 14:29:17.579638",
+                    "last_updated": "2024-07-15 15:52:24.311118",
                     "uncertainty": null
                 },
                 "frequency_q1": null,
@@ -536,7 +536,7 @@
                     "unit": "Hz",
                     "long_name": "Q1 frequency",
                     "description": "The dispersively shifted resonator frequency with the qubit in state |1\u27e9",
-                    "last_updated": "2024-07-11 14:29:17.579638",
+                    "last_updated": "2024-07-15 15:52:24.311118",
                     "uncertainty": null
                 },
                 "Q_int": null,
@@ -544,7 +544,7 @@
                     "unit": null,
                     "long_name": "Internal quality factor",
                     "description": "The internal quality factor of the resonator",
-                    "last_updated": "2024-07-11 14:29:17.579638",
+                    "last_updated": "2024-07-15 15:52:24.311118",
                     "uncertainty": null
                 },
                 "Q_ext": null,
@@ -552,14 +552,14 @@
                     "unit": null,
                     "long_name": "External quality factor",
                     "description": "The external quality factor of the resonator",
-                    "last_updated": "2024-07-11 14:29:17.579638",
+                    "last_updated": "2024-07-15 15:52:24.311118",
                     "uncertainty": null
                 },
                 "readout_frequency__metadata": {
                     "unit": "Hz",
                     "long_name": "Readout frequency",
                     "description": "The readout frequency of the resonator",
-                    "last_updated": "2024-07-11 14:29:17.579638",
+                    "last_updated": "2024-07-15 15:52:24.311118",
                     "uncertainty": null
                 }
             },
@@ -571,7 +571,7 @@
                 "unit": "Hz",
                 "long_name": "Transition frequencies",
                 "description": "Transition frequencies of the qubit in the form [f01, f12, ...]",
-                "last_updated": "2024-07-11 14:29:17.579638",
+                "last_updated": "2024-07-15 15:52:24.311118",
                 "uncertainty": null
             },
             "T1": null,
@@ -579,7 +579,7 @@
                 "unit": "s",
                 "long_name": "T1",
                 "description": "Qubit decay rate",
-                "last_updated": "2024-07-11 14:29:17.579638",
+                "last_updated": "2024-07-15 15:52:24.311118",
                 "uncertainty": null
             },
             "T2ramsey": null,
@@ -587,7 +587,7 @@
                 "unit": "s",
                 "long_name": "T2 Ramsey",
                 "description": "Dephasing time as measured by a Ramsey experiment",
-                "last_updated": "2024-07-11 14:29:17.579638",
+                "last_updated": "2024-07-15 15:52:24.311118",
                 "uncertainty": null
             },
             "T2echo": null,
@@ -595,7 +595,7 @@
                 "unit": "s",
                 "long_name": "T2 echo",
                 "description": "Dephasing time as measured by an echo experiment",
-                "last_updated": "2024-07-11 14:29:17.579638",
+                "last_updated": "2024-07-15 15:52:24.311118",
                 "uncertainty": null
             },
             "thermalization_time_factor": 5,
@@ -603,7 +603,7 @@
                 "unit": "int",
                 "long_name": "Thermalization time factor",
                 "description": "Factor to multiply the T1 time in cooldown qubit resets. exp(-5) = 0.0067",
-                "last_updated": "2024-07-11 14:29:17.579638",
+                "last_updated": "2024-07-15 15:52:24.311118",
                 "uncertainty": null
             },
             "pulse_sets": {
@@ -615,7 +615,7 @@
                         "unit": "V",
                         "long_name": "\u03c0/2-pulse peak amplitude",
                         "description": "Amplitude of the \u03c0/2 pulse.",
-                        "last_updated": "2024-07-11 14:29:17.579638",
+                        "last_updated": "2024-07-15 15:52:24.311118",
                         "uncertainty": null
                     },
                     "amplitude_180": 0.5,
@@ -623,7 +623,7 @@
                         "unit": "V",
                         "long_name": "\u03c0-pulse peak amplitude",
                         "description": "Amplitude of the \u03c0 pulse.",
-                        "last_updated": "2024-07-11 14:29:17.579638",
+                        "last_updated": "2024-07-15 15:52:24.311118",
                         "uncertainty": null
                     },
                     "length": "#/shared_qubit_parameters/drag_gaussian_pulse_parameters/length",
@@ -631,15 +631,15 @@
                         "unit": "ns",
                         "long_name": "Pulse length",
                         "description": "Length of the window containing the pulse.",
-                        "last_updated": "2024-07-11 14:29:17.579638",
+                        "last_updated": "2024-07-15 15:52:24.311118",
                         "uncertainty": null
                     },
-                    "sigma": "#/shared_qubit_parameters/drag_gaussian_pulse_parameters/sigma",
-                    "sigma__metadata": {
-                        "unit": "ns",
-                        "long_name": "Pulse sigma",
-                        "description": "Width of the Gaussian waveform pulse.",
-                        "last_updated": "2024-07-11 14:29:17.579638",
+                    "sigma_to_length_ratio": 0.25,
+                    "sigma_to_length_ratio__metadata": {
+                        "unit": null,
+                        "long_name": "Sigma to length ratio",
+                        "description": "Ratio of the pulse sigma to the pulse length.",
+                        "last_updated": "2024-07-15 15:52:24.311118",
                         "uncertainty": null
                     },
                     "phase_x": 0,
@@ -647,7 +647,7 @@
                         "unit": "degree",
                         "long_name": "X-axis phase",
                         "description": "Phase of the pulse in the X-axis.",
-                        "last_updated": "2024-07-11 14:29:17.579638",
+                        "last_updated": "2024-07-15 15:52:24.311118",
                         "uncertainty": null
                     },
                     "phase_y": 90,
@@ -655,7 +655,7 @@
                         "unit": "degree",
                         "long_name": "Y-axis phase",
                         "description": "Phase of the pulse in the Y-axis.",
-                        "last_updated": "2024-07-11 14:29:17.579638",
+                        "last_updated": "2024-07-15 15:52:24.311118",
                         "uncertainty": null
                     },
                     "anharmonicity": "#../../anharmonicity",
@@ -663,7 +663,7 @@
                         "unit": "Hz",
                         "long_name": "Waveform anharmonicity",
                         "description": "Anharmonicity used in the calculation of the DRAG waveform.",
-                        "last_updated": "2024-07-11 14:29:17.579638",
+                        "last_updated": "2024-07-15 15:52:24.311118",
                         "uncertainty": null
                     },
                     "detuning": 0,
@@ -671,7 +671,7 @@
                         "unit": "Hz",
                         "long_name": "Detuning",
                         "description": "Detuning of the pulse from the channel RF frequency.",
-                        "last_updated": "2024-07-11 14:29:17.579638",
+                        "last_updated": "2024-07-15 15:52:24.311118",
                         "uncertainty": null
                     },
                     "alpha": 0,
@@ -679,7 +679,7 @@
                         "unit": null,
                         "long_name": "DRAG coefficient",
                         "description": "Coefficient for the derivative of the pulse.",
-                        "last_updated": "2024-07-11 14:29:17.579638",
+                        "last_updated": "2024-07-15 15:52:24.311118",
                         "uncertainty": null
                     },
                     "subtracted": "#/shared_qubit_parameters/drag_gaussian_pulse_parameters/subtracted",
@@ -687,7 +687,7 @@
                         "unit": null,
                         "long_name": "Subtracted",
                         "description": "Whether the pulse is shifted such that the end points are 0",
-                        "last_updated": "2024-07-11 14:29:17.579638",
+                        "last_updated": "2024-07-15 15:52:24.311118",
                         "uncertainty": null
                     },
                     "digital_marker": null,
@@ -701,7 +701,7 @@
                         "unit": "V",
                         "long_name": "Pulse amplitude",
                         "description": "Peak amplitude of the pulse.",
-                        "last_updated": "2024-07-11 14:29:17.579638",
+                        "last_updated": "2024-07-15 15:52:24.311118",
                         "uncertainty": null
                     },
                     "rise_fall_time": 16,
@@ -709,7 +709,7 @@
                         "unit": "ns",
                         "long_name": "Rise and fall time",
                         "description": "Time taken for the pulse to rise and fall, each the rise and fall parts are each of this duration.",
-                        "last_updated": "2024-07-11 14:29:17.579638",
+                        "last_updated": "2024-07-15 15:52:24.311118",
                         "uncertainty": null
                     },
                     "__class__": "squid_lab_quam.components.pulse_sets.PulseSetFlattopCosine"
@@ -861,16 +861,16 @@
                     "opx_output_offset_I": null,
                     "opx_output_offset_Q": null,
                     "frequency_converter_up": "#/octaves/octave1/RF_outputs/1",
-                    "intermediate_frequency": 0.0,
+                    "intermediate_frequency": "#./inferred_intermediate_frequency",
                     "LO_frequency": "#./frequency_converter_up/LO_frequency",
-                    "RF_frequency": "#./inferred_RF_frequency"
+                    "RF_frequency": 5100000000.0
                 },
                 "depletion_time": null,
                 "depletion_time__metadata": {
                     "unit": "ns",
                     "long_name": "Depletion time",
                     "description": "The resonator depletion time",
-                    "last_updated": "2024-07-11 14:29:17.579638",
+                    "last_updated": "2024-07-15 15:52:24.311118",
                     "uncertainty": null
                 },
                 "frequency_bare": null,
@@ -878,7 +878,7 @@
                     "unit": "Hz",
                     "long_name": "Bare frequency",
                     "description": "The bare resonator frequency, i.e., as measured at high power",
-                    "last_updated": "2024-07-11 14:29:17.579638",
+                    "last_updated": "2024-07-15 15:52:24.311118",
                     "uncertainty": null
                 },
                 "frequency_q0": null,
@@ -886,7 +886,7 @@
                     "unit": "Hz",
                     "long_name": "Q0 frequency",
                     "description": "The dispersively shifted resonator frequency with the qubit in state |0\u27e9",
-                    "last_updated": "2024-07-11 14:29:17.579638",
+                    "last_updated": "2024-07-15 15:52:24.311118",
                     "uncertainty": null
                 },
                 "frequency_q1": null,
@@ -894,7 +894,7 @@
                     "unit": "Hz",
                     "long_name": "Q1 frequency",
                     "description": "The dispersively shifted resonator frequency with the qubit in state |1\u27e9",
-                    "last_updated": "2024-07-11 14:29:17.579638",
+                    "last_updated": "2024-07-15 15:52:24.311118",
                     "uncertainty": null
                 },
                 "Q_int": null,
@@ -902,7 +902,7 @@
                     "unit": null,
                     "long_name": "Internal quality factor",
                     "description": "The internal quality factor of the resonator",
-                    "last_updated": "2024-07-11 14:29:17.579638",
+                    "last_updated": "2024-07-15 15:52:24.311118",
                     "uncertainty": null
                 },
                 "Q_ext": null,
@@ -910,14 +910,14 @@
                     "unit": null,
                     "long_name": "External quality factor",
                     "description": "The external quality factor of the resonator",
-                    "last_updated": "2024-07-11 14:29:17.579638",
+                    "last_updated": "2024-07-15 15:52:24.311118",
                     "uncertainty": null
                 },
                 "readout_frequency__metadata": {
                     "unit": "Hz",
                     "long_name": "Readout frequency",
                     "description": "The readout frequency of the resonator",
-                    "last_updated": "2024-07-11 14:29:17.579638",
+                    "last_updated": "2024-07-15 15:52:24.311118",
                     "uncertainty": null
                 }
             },
@@ -929,7 +929,7 @@
                 "unit": "Hz",
                 "long_name": "Transition frequencies",
                 "description": "Transition frequencies of the qubit in the form [f01, f12, ...]",
-                "last_updated": "2024-07-11 14:29:17.579638",
+                "last_updated": "2024-07-15 15:52:24.311118",
                 "uncertainty": null
             },
             "T1": null,
@@ -937,7 +937,7 @@
                 "unit": "s",
                 "long_name": "T1",
                 "description": "Qubit decay rate",
-                "last_updated": "2024-07-11 14:29:17.579638",
+                "last_updated": "2024-07-15 15:52:24.311118",
                 "uncertainty": null
             },
             "T2ramsey": null,
@@ -945,7 +945,7 @@
                 "unit": "s",
                 "long_name": "T2 Ramsey",
                 "description": "Dephasing time as measured by a Ramsey experiment",
-                "last_updated": "2024-07-11 14:29:17.579638",
+                "last_updated": "2024-07-15 15:52:24.311118",
                 "uncertainty": null
             },
             "T2echo": null,
@@ -953,7 +953,7 @@
                 "unit": "s",
                 "long_name": "T2 echo",
                 "description": "Dephasing time as measured by an echo experiment",
-                "last_updated": "2024-07-11 14:29:17.579638",
+                "last_updated": "2024-07-15 15:52:24.311118",
                 "uncertainty": null
             },
             "thermalization_time_factor": 5,
@@ -961,7 +961,7 @@
                 "unit": "int",
                 "long_name": "Thermalization time factor",
                 "description": "Factor to multiply the T1 time in cooldown qubit resets. exp(-5) = 0.0067",
-                "last_updated": "2024-07-11 14:29:17.579638",
+                "last_updated": "2024-07-15 15:52:24.311118",
                 "uncertainty": null
             },
             "pulse_sets": {
@@ -973,7 +973,7 @@
                         "unit": "V",
                         "long_name": "\u03c0/2-pulse peak amplitude",
                         "description": "Amplitude of the \u03c0/2 pulse.",
-                        "last_updated": "2024-07-11 14:29:17.579638",
+                        "last_updated": "2024-07-15 15:52:24.311118",
                         "uncertainty": null
                     },
                     "amplitude_180": 0.5,
@@ -981,7 +981,7 @@
                         "unit": "V",
                         "long_name": "\u03c0-pulse peak amplitude",
                         "description": "Amplitude of the \u03c0 pulse.",
-                        "last_updated": "2024-07-11 14:29:17.579638",
+                        "last_updated": "2024-07-15 15:52:24.311118",
                         "uncertainty": null
                     },
                     "length": "#/shared_qubit_parameters/drag_gaussian_pulse_parameters/length",
@@ -989,15 +989,15 @@
                         "unit": "ns",
                         "long_name": "Pulse length",
                         "description": "Length of the window containing the pulse.",
-                        "last_updated": "2024-07-11 14:29:17.579638",
+                        "last_updated": "2024-07-15 15:52:24.311118",
                         "uncertainty": null
                     },
-                    "sigma": "#/shared_qubit_parameters/drag_gaussian_pulse_parameters/sigma",
-                    "sigma__metadata": {
-                        "unit": "ns",
-                        "long_name": "Pulse sigma",
-                        "description": "Width of the Gaussian waveform pulse.",
-                        "last_updated": "2024-07-11 14:29:17.579638",
+                    "sigma_to_length_ratio": 0.25,
+                    "sigma_to_length_ratio__metadata": {
+                        "unit": null,
+                        "long_name": "Sigma to length ratio",
+                        "description": "Ratio of the pulse sigma to the pulse length.",
+                        "last_updated": "2024-07-15 15:52:24.311118",
                         "uncertainty": null
                     },
                     "phase_x": 0,
@@ -1005,7 +1005,7 @@
                         "unit": "degree",
                         "long_name": "X-axis phase",
                         "description": "Phase of the pulse in the X-axis.",
-                        "last_updated": "2024-07-11 14:29:17.579638",
+                        "last_updated": "2024-07-15 15:52:24.311118",
                         "uncertainty": null
                     },
                     "phase_y": 90,
@@ -1013,7 +1013,7 @@
                         "unit": "degree",
                         "long_name": "Y-axis phase",
                         "description": "Phase of the pulse in the Y-axis.",
-                        "last_updated": "2024-07-11 14:29:17.579638",
+                        "last_updated": "2024-07-15 15:52:24.311118",
                         "uncertainty": null
                     },
                     "anharmonicity": "#../../anharmonicity",
@@ -1021,7 +1021,7 @@
                         "unit": "Hz",
                         "long_name": "Waveform anharmonicity",
                         "description": "Anharmonicity used in the calculation of the DRAG waveform.",
-                        "last_updated": "2024-07-11 14:29:17.579638",
+                        "last_updated": "2024-07-15 15:52:24.311118",
                         "uncertainty": null
                     },
                     "detuning": 0,
@@ -1029,7 +1029,7 @@
                         "unit": "Hz",
                         "long_name": "Detuning",
                         "description": "Detuning of the pulse from the channel RF frequency.",
-                        "last_updated": "2024-07-11 14:29:17.579638",
+                        "last_updated": "2024-07-15 15:52:24.311118",
                         "uncertainty": null
                     },
                     "alpha": 0,
@@ -1037,7 +1037,7 @@
                         "unit": null,
                         "long_name": "DRAG coefficient",
                         "description": "Coefficient for the derivative of the pulse.",
-                        "last_updated": "2024-07-11 14:29:17.579638",
+                        "last_updated": "2024-07-15 15:52:24.311118",
                         "uncertainty": null
                     },
                     "subtracted": "#/shared_qubit_parameters/drag_gaussian_pulse_parameters/subtracted",
@@ -1045,7 +1045,7 @@
                         "unit": null,
                         "long_name": "Subtracted",
                         "description": "Whether the pulse is shifted such that the end points are 0",
-                        "last_updated": "2024-07-11 14:29:17.579638",
+                        "last_updated": "2024-07-15 15:52:24.311118",
                         "uncertainty": null
                     },
                     "digital_marker": null,
@@ -1059,7 +1059,7 @@
                         "unit": "V",
                         "long_name": "Pulse amplitude",
                         "description": "Peak amplitude of the pulse.",
-                        "last_updated": "2024-07-11 14:29:17.579638",
+                        "last_updated": "2024-07-15 15:52:24.311118",
                         "uncertainty": null
                     },
                     "rise_fall_time": 16,
@@ -1067,7 +1067,7 @@
                         "unit": "ns",
                         "long_name": "Rise and fall time",
                         "description": "Time taken for the pulse to rise and fall, each the rise and fall parts are each of this duration.",
-                        "last_updated": "2024-07-11 14:29:17.579638",
+                        "last_updated": "2024-07-15 15:52:24.311118",
                         "uncertainty": null
                     },
                     "__class__": "squid_lab_quam.components.pulse_sets.PulseSetFlattopCosine"
@@ -1219,16 +1219,16 @@
                     "opx_output_offset_I": null,
                     "opx_output_offset_Q": null,
                     "frequency_converter_up": "#/octaves/octave1/RF_outputs/1",
-                    "intermediate_frequency": 0.0,
+                    "intermediate_frequency": "#./inferred_intermediate_frequency",
                     "LO_frequency": "#./frequency_converter_up/LO_frequency",
-                    "RF_frequency": "#./inferred_RF_frequency"
+                    "RF_frequency": 5100000000.0
                 },
                 "depletion_time": null,
                 "depletion_time__metadata": {
                     "unit": "ns",
                     "long_name": "Depletion time",
                     "description": "The resonator depletion time",
-                    "last_updated": "2024-07-11 14:29:17.579638",
+                    "last_updated": "2024-07-15 15:52:24.311118",
                     "uncertainty": null
                 },
                 "frequency_bare": null,
@@ -1236,7 +1236,7 @@
                     "unit": "Hz",
                     "long_name": "Bare frequency",
                     "description": "The bare resonator frequency, i.e., as measured at high power",
-                    "last_updated": "2024-07-11 14:29:17.579638",
+                    "last_updated": "2024-07-15 15:52:24.311118",
                     "uncertainty": null
                 },
                 "frequency_q0": null,
@@ -1244,7 +1244,7 @@
                     "unit": "Hz",
                     "long_name": "Q0 frequency",
                     "description": "The dispersively shifted resonator frequency with the qubit in state |0\u27e9",
-                    "last_updated": "2024-07-11 14:29:17.579638",
+                    "last_updated": "2024-07-15 15:52:24.311118",
                     "uncertainty": null
                 },
                 "frequency_q1": null,
@@ -1252,7 +1252,7 @@
                     "unit": "Hz",
                     "long_name": "Q1 frequency",
                     "description": "The dispersively shifted resonator frequency with the qubit in state |1\u27e9",
-                    "last_updated": "2024-07-11 14:29:17.579638",
+                    "last_updated": "2024-07-15 15:52:24.311118",
                     "uncertainty": null
                 },
                 "Q_int": null,
@@ -1260,7 +1260,7 @@
                     "unit": null,
                     "long_name": "Internal quality factor",
                     "description": "The internal quality factor of the resonator",
-                    "last_updated": "2024-07-11 14:29:17.579638",
+                    "last_updated": "2024-07-15 15:52:24.311118",
                     "uncertainty": null
                 },
                 "Q_ext": null,
@@ -1268,14 +1268,14 @@
                     "unit": null,
                     "long_name": "External quality factor",
                     "description": "The external quality factor of the resonator",
-                    "last_updated": "2024-07-11 14:29:17.579638",
+                    "last_updated": "2024-07-15 15:52:24.311118",
                     "uncertainty": null
                 },
                 "readout_frequency__metadata": {
                     "unit": "Hz",
                     "long_name": "Readout frequency",
                     "description": "The readout frequency of the resonator",
-                    "last_updated": "2024-07-11 14:29:17.579638",
+                    "last_updated": "2024-07-15 15:52:24.311118",
                     "uncertainty": null
                 }
             },
@@ -1287,7 +1287,7 @@
                 "unit": "Hz",
                 "long_name": "Transition frequencies",
                 "description": "Transition frequencies of the qubit in the form [f01, f12, ...]",
-                "last_updated": "2024-07-11 14:29:17.579638",
+                "last_updated": "2024-07-15 15:52:24.311118",
                 "uncertainty": null
             },
             "T1": null,
@@ -1295,7 +1295,7 @@
                 "unit": "s",
                 "long_name": "T1",
                 "description": "Qubit decay rate",
-                "last_updated": "2024-07-11 14:29:17.579638",
+                "last_updated": "2024-07-15 15:52:24.311118",
                 "uncertainty": null
             },
             "T2ramsey": null,
@@ -1303,7 +1303,7 @@
                 "unit": "s",
                 "long_name": "T2 Ramsey",
                 "description": "Dephasing time as measured by a Ramsey experiment",
-                "last_updated": "2024-07-11 14:29:17.579638",
+                "last_updated": "2024-07-15 15:52:24.311118",
                 "uncertainty": null
             },
             "T2echo": null,
@@ -1311,7 +1311,7 @@
                 "unit": "s",
                 "long_name": "T2 echo",
                 "description": "Dephasing time as measured by an echo experiment",
-                "last_updated": "2024-07-11 14:29:17.579638",
+                "last_updated": "2024-07-15 15:52:24.311118",
                 "uncertainty": null
             },
             "thermalization_time_factor": 5,
@@ -1319,7 +1319,7 @@
                 "unit": "int",
                 "long_name": "Thermalization time factor",
                 "description": "Factor to multiply the T1 time in cooldown qubit resets. exp(-5) = 0.0067",
-                "last_updated": "2024-07-11 14:29:17.579638",
+                "last_updated": "2024-07-15 15:52:24.311118",
                 "uncertainty": null
             },
             "pulse_sets": {
@@ -1331,7 +1331,7 @@
                         "unit": "V",
                         "long_name": "\u03c0/2-pulse peak amplitude",
                         "description": "Amplitude of the \u03c0/2 pulse.",
-                        "last_updated": "2024-07-11 14:29:17.579638",
+                        "last_updated": "2024-07-15 15:52:24.311118",
                         "uncertainty": null
                     },
                     "amplitude_180": 0.5,
@@ -1339,7 +1339,7 @@
                         "unit": "V",
                         "long_name": "\u03c0-pulse peak amplitude",
                         "description": "Amplitude of the \u03c0 pulse.",
-                        "last_updated": "2024-07-11 14:29:17.579638",
+                        "last_updated": "2024-07-15 15:52:24.311118",
                         "uncertainty": null
                     },
                     "length": "#/shared_qubit_parameters/drag_gaussian_pulse_parameters/length",
@@ -1347,15 +1347,15 @@
                         "unit": "ns",
                         "long_name": "Pulse length",
                         "description": "Length of the window containing the pulse.",
-                        "last_updated": "2024-07-11 14:29:17.579638",
+                        "last_updated": "2024-07-15 15:52:24.311118",
                         "uncertainty": null
                     },
-                    "sigma": "#/shared_qubit_parameters/drag_gaussian_pulse_parameters/sigma",
-                    "sigma__metadata": {
-                        "unit": "ns",
-                        "long_name": "Pulse sigma",
-                        "description": "Width of the Gaussian waveform pulse.",
-                        "last_updated": "2024-07-11 14:29:17.579638",
+                    "sigma_to_length_ratio": 0.25,
+                    "sigma_to_length_ratio__metadata": {
+                        "unit": null,
+                        "long_name": "Sigma to length ratio",
+                        "description": "Ratio of the pulse sigma to the pulse length.",
+                        "last_updated": "2024-07-15 15:52:24.311118",
                         "uncertainty": null
                     },
                     "phase_x": 0,
@@ -1363,7 +1363,7 @@
                         "unit": "degree",
                         "long_name": "X-axis phase",
                         "description": "Phase of the pulse in the X-axis.",
-                        "last_updated": "2024-07-11 14:29:17.579638",
+                        "last_updated": "2024-07-15 15:52:24.311118",
                         "uncertainty": null
                     },
                     "phase_y": 90,
@@ -1371,7 +1371,7 @@
                         "unit": "degree",
                         "long_name": "Y-axis phase",
                         "description": "Phase of the pulse in the Y-axis.",
-                        "last_updated": "2024-07-11 14:29:17.579638",
+                        "last_updated": "2024-07-15 15:52:24.311118",
                         "uncertainty": null
                     },
                     "anharmonicity": "#../../anharmonicity",
@@ -1379,7 +1379,7 @@
                         "unit": "Hz",
                         "long_name": "Waveform anharmonicity",
                         "description": "Anharmonicity used in the calculation of the DRAG waveform.",
-                        "last_updated": "2024-07-11 14:29:17.579638",
+                        "last_updated": "2024-07-15 15:52:24.311118",
                         "uncertainty": null
                     },
                     "detuning": 0,
@@ -1387,7 +1387,7 @@
                         "unit": "Hz",
                         "long_name": "Detuning",
                         "description": "Detuning of the pulse from the channel RF frequency.",
-                        "last_updated": "2024-07-11 14:29:17.579638",
+                        "last_updated": "2024-07-15 15:52:24.311118",
                         "uncertainty": null
                     },
                     "alpha": 0,
@@ -1395,7 +1395,7 @@
                         "unit": null,
                         "long_name": "DRAG coefficient",
                         "description": "Coefficient for the derivative of the pulse.",
-                        "last_updated": "2024-07-11 14:29:17.579638",
+                        "last_updated": "2024-07-15 15:52:24.311118",
                         "uncertainty": null
                     },
                     "subtracted": "#/shared_qubit_parameters/drag_gaussian_pulse_parameters/subtracted",
@@ -1403,7 +1403,7 @@
                         "unit": null,
                         "long_name": "Subtracted",
                         "description": "Whether the pulse is shifted such that the end points are 0",
-                        "last_updated": "2024-07-11 14:29:17.579638",
+                        "last_updated": "2024-07-15 15:52:24.311118",
                         "uncertainty": null
                     },
                     "digital_marker": null,
@@ -1417,7 +1417,7 @@
                         "unit": "V",
                         "long_name": "Pulse amplitude",
                         "description": "Peak amplitude of the pulse.",
-                        "last_updated": "2024-07-11 14:29:17.579638",
+                        "last_updated": "2024-07-15 15:52:24.311118",
                         "uncertainty": null
                     },
                     "rise_fall_time": 16,
@@ -1425,7 +1425,7 @@
                         "unit": "ns",
                         "long_name": "Rise and fall time",
                         "description": "Time taken for the pulse to rise and fall, each the rise and fall parts are each of this duration.",
-                        "last_updated": "2024-07-11 14:29:17.579638",
+                        "last_updated": "2024-07-15 15:52:24.311118",
                         "uncertainty": null
                     },
                     "__class__": "squid_lab_quam.components.pulse_sets.PulseSetFlattopCosine"
@@ -1436,7 +1436,6 @@
     "shared_qubit_parameters": {
         "drag_gaussian_pulse_parameters": {
             "length": 40,
-            "sigma": 7,
             "subtracted": true
         }
     },
@@ -1445,7 +1444,7 @@
             "name": "#./name_from_parent_dict",
             "ip": "#/network/octave_networks/octave1/octave_host",
             "port": "#/network/octave_networks/octave1/octave_port",
-            "calibration_db_path": null,
+            "calibration_db_path": "#/information/calibration_db_path",
             "RF_outputs": {
                 "1": {
                     "id": "#./id_from_parent_dict",

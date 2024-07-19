@@ -1,10 +1,10 @@
 from dataclasses import field
-from typing import ClassVar, Dict, Sequence
+from typing import ClassVar, Dict, Optional, Sequence
 
 from qm import QuantumMachine, QuantumMachinesManager
 from quam.components.channels import InOutIQChannel, IQChannel
 from quam.components.pulses import SquareReadoutPulse
-from quam.core import QuamDict, QuamRoot, quam_dataclass
+from quam.core import QuamRoot, quam_dataclass
 
 from squid_lab_quam.components.information import Information
 from squid_lab_quam.components.network import OPXNetwork
@@ -32,12 +32,12 @@ class SQuIDRoot1(QuamRoot):
     def load(cls, *args, **kwargs) -> "SQuIDRoot1":
         return super().load(*args, **kwargs)
 
-    wiring: OPXWiring = field(default_factory=OPXWiring)
-    network: OPXNetwork = field(default_factory=OPXNetwork)
     information: Information = field(default_factory=Information)
+    network: OPXNetwork = field(default_factory=OPXNetwork)
+    wiring: OPXWiring = field(default_factory=OPXWiring)
+    octaves: Dict[str, OctaveSQuID] = field(default_factory=dict)
     qubits: dict[str, ScQubit] = field(default_factory=dict)
     shared_qubit_parameters: dict = field(default_factory=dict)
-    octaves: Dict[str, OctaveSQuID] = field(default_factory=dict)
 
     _qm: ClassVar[QuantumMachine] = None
     _qmm: ClassVar[QuantumMachinesManager] = None
@@ -77,6 +77,12 @@ class SQuIDRoot1(QuamRoot):
             )
         return self._qmm
 
+    @property
+    def resonators(self) -> dict[str, ReadoutResonator]:
+        return {
+            qubit_name: qubit.resonator for qubit_name, qubit in self.qubits.items()
+        }
+
     def set_default_gate_shape(self, gate_shape: str) -> None:
         """Set the default gate shape for all qubits.
 
@@ -97,7 +103,7 @@ class SQuIDRoot1(QuamRoot):
     def save(
         self,
         path=None,
-        content_mapping: Dict[str, str] = None,
+        content_mapping: Optional[Dict[str, str]] = None,
         include_defaults: bool = True,
         ignore: Sequence[str] = None,
     ) -> None:
@@ -135,7 +141,7 @@ class SQuIDRoot1(QuamRoot):
 
     @classmethod
     def generate_empty_quam_single_feedline(
-        n_qubits: int,
+        cls,
         wiring: OPXWiring,
         network: OPXNetwork,
         information: Information,
@@ -249,8 +255,6 @@ class SQuIDRoot1(QuamRoot):
             qubit.resonator.channel.operations["readout"] = SquareReadoutPulse(
                 length=readout_length,
                 amplitude=readout_amplitude,
-                threshold=0.0,
-                digital_marker="ON",
             )
 
         return machine

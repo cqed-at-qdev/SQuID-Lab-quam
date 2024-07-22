@@ -47,7 +47,7 @@ def reset_qubit(
         return active_reset(qubit, **kwargs)
 
     elif reset_method == "cooldown":
-        return cooldown_reset(qubit, **kwargs)
+        return cooldown_reset(qubit, cooldown_time=relaxation_time)
 
 
 def active_reset(

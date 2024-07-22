@@ -188,10 +188,13 @@ class ScQubit(QuamComponent):
             reset_method (Literal["active", "cooldown", None] | Callable[Concatenate[Qubit, ...], None], optional): The method to use to reset the qubit. Defaults to "active".
             readout_pulse (str, optional): Pulse shape to use for the readout pulse. Defaults to "flattop".
             max_tries (int, optional): The maximum number of tries to reset the qubit. Defaults to 10.
-            threshold_g (float | None, optional): The threshold to use for the readout pulse. Defaults to None.
+            threshold_g (float | None, optional): The threshold to use for the readout pulse. Defaults to thermalization_time_factor * T1.
             relaxation_time (float | None, optional): The time to wait for the resonator to relax. Defaults to None.
             save (bool, optional): Whether to save the number of pulses applied. Defaults to True.
         """
+        if relaxation_time is None:
+            relaxation_time = self.thermalization_time_factor * self.T1
+
         return reset_qubit(
             self,
             reset_method=reset_method,

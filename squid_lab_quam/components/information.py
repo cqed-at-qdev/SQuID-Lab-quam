@@ -83,13 +83,6 @@ class QuamMetadata(QuamComponent):
 
     @property
     def name(self) -> str:
-        # name = self.parent.get_attr_name(self)
-        # if not name.endswith("__metadata"):
-        #     raise ValueError(
-        #         f"Metadata parameter name {name} does not end with '__metadata'"
-        #     )
-        # return name
-
         return get_quam_info_name(self)
 
     @property

@@ -1,5 +1,5 @@
 from dataclasses import field
-from typing import Tuple, Union
+from typing import Optional, Tuple, Union
 
 from qm.qua._dsl_specific_type_hints import AmpValuesType
 from qm.qua._expressions import QuaVariableType
@@ -19,6 +19,8 @@ class ReadoutResonator(QuamComponent):
         depletion_time (int): the resonator depletion time in ns.
         frequency_bare (int, float): the bare resonator frequency in Hz.
     """
+
+    id: Optional[str] = None
 
     channel: InOutIQChannel
     depletion_time: int = None
@@ -65,7 +67,7 @@ class ReadoutResonator(QuamComponent):
         )
     )
 
-    Q_ext: float = None
+    Q_ext: Optional[float] = None
     Q_ext__metadata: QuamMetadata = field(
         default_factory=lambda: QuamMetadata(
             long_name="External quality factor",
@@ -94,11 +96,14 @@ class ReadoutResonator(QuamComponent):
 
     @property
     def name(self) -> str:
-        return f"{self.parent.name}.resonator"
+        if self.id is None:
+            return f"{self.parent.name}.resonator"
+        else:
+            return self.id
 
-    # @property
-    # def name(self):
-    #     return self.channel.name
+    @property
+    def name(self):
+        return self.channel.name
 
     @property
     def readout_frequency(self) -> float:

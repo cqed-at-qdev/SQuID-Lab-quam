@@ -83,7 +83,7 @@ class ReadoutResonator(QuamComponent):
         )
     )
 
-    # def __post_init__(self):
+    # def __post_init__(self): #TODO: discuss with Serwan if something like this can be supported
     #     if self.channel.id is None:
     #         self.channel.id = "#../default_resonator_channel_id"
 

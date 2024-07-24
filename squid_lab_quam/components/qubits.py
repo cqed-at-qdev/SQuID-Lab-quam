@@ -1,10 +1,12 @@
 from dataclasses import field
 from typing import Literal, Tuple, Union
 
+from qm.octave.octave_mixer_calibration import MixerCalibrationResults
 from qm.qua import align
 from qm.qua._dsl_specific_type_hints import AmpValuesType
 from qm.qua._expressions import QuaVariableType
 from quam.components.channels import IQChannel
+from quam.components.octave import OctaveUpConverter
 from quam.core import QuamComponent, quam_dataclass
 
 from squid_lab_quam.components.flux_line import FluxLine
@@ -188,10 +190,13 @@ class ScQubit(QuamComponent):
             reset_method (Literal["active", "cooldown", None] | Callable[Concatenate[Qubit, ...], None], optional): The method to use to reset the qubit. Defaults to "active".
             readout_pulse (str, optional): Pulse shape to use for the readout pulse. Defaults to "flattop".
             max_tries (int, optional): The maximum number of tries to reset the qubit. Defaults to 10.
-            threshold_g (float | None, optional): The threshold to use for the readout pulse. Defaults to None.
+            threshold_g (float | None, optional): The threshold to use for the readout pulse. Defaults to thermalization_time_factor * T1.
             relaxation_time (float | None, optional): The time to wait for the resonator to relax. Defaults to None.
             save (bool, optional): Whether to save the number of pulses applied. Defaults to True.
         """
+        if relaxation_time is None:
+            relaxation_time = self.thermalization_time_factor * self.T1
+
         return reset_qubit(
             self,
             reset_method=reset_method,
@@ -202,13 +207,29 @@ class ScQubit(QuamComponent):
             save=save,
         )
 
+    def calibrate_drive_mixer(self) -> MixerCalibrationResults:
+        if not isinstance(self.xy.frequency_converter_up, OctaveUpConverter):
+            raise NotImplementedError(
+                f"Error: Mixer calibration only implemented with an octave up converter."
+            )
+        self._root.qm.calibrate_element(self.xy.name)
+
+    def calibrate_readout_mixer(self) -> MixerCalibrationResults:
+        if not isinstance(
+            self.resonator.channel.frequency_converter_up, OctaveUpConverter
+        ):
+            raise NotImplementedError(
+                f"Error: Mixer calibration only implemented with an octave up converter."
+            )
+        self._root.qm.calibrate_element(self.resonator.channel.name)
+
     def align(self, *elements):
         """Align the qubit to other elements."""
         align(self.xy.name, *elements)
 
     def align_resonator(self, *elements):
         """Align the qubit to other elements and its resonator."""
-        align(self.xy.name, self.resonator.name, *elements)
+        align(self.xy.name, self.resonator.channel.name, *elements)
 
     def wait(self, duration, *elements):
         """Wait for a duration."""

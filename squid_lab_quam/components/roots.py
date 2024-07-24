@@ -1,10 +1,14 @@
 from dataclasses import field
-from typing import ClassVar, Dict, Optional, Sequence
+from typing import ClassVar, Dict, List, Optional, Sequence
 
 from qm import QuantumMachine, QuantumMachinesManager
+from qm.api.models.compiler import CompilerOptionArguments
+from qm.jobs.running_qm_job import RunningQmJob
+from qm.program import Program
+from qm.simulate.interface import SimulationConfig
 from quam.components.channels import InOutIQChannel, IQChannel
 from quam.components.pulses import SquareReadoutPulse
-from quam.core import QuamRoot, quam_dataclass
+from quam.core import QuamDict, QuamRoot, quam_dataclass
 
 from squid_lab_quam.components.information import Information
 from squid_lab_quam.components.network import OPXNetwork
@@ -83,6 +87,40 @@ class SQuIDRoot1(QuamRoot):
             qubit_name: qubit.resonator for qubit_name, qubit in self.qubits.items()
         }
 
+    def execute(
+        self,
+        program: Program,
+        simulate: Optional[SimulationConfig] = None,
+        compiler_options: Optional[CompilerOptionArguments] = None,
+        strict: Optional[bool] = None,
+        flags: Optional[List[str]] = None,
+    ) -> RunningQmJob:
+        """Executes a program and returns a job object to keep track of execution and get
+        results.
+
+        Note:
+
+            Calling execute will halt any currently running program and clear the current
+            queue. If you want to add a job to the queue, use .qm.queue.add()
+
+        Args:
+            program: A QUA ``program()`` object to execute
+            simulate: Not documented by QM api
+            compiler_options: Not documented by QM api
+            strict: Not documented by QM api
+            flags: Not documented by QM api
+
+        Returns:
+            A ``QmJob`` object (see QM Job API).
+        """
+        return self.qm.execute(
+            program,
+            simulate=simulate,
+            compiler_options=compiler_options,
+            strict=strict,
+            flags=flags,
+        )
+
     def set_default_gate_shape(self, gate_shape: str) -> None:
         """Set the default gate shape for all qubits.
 
@@ -145,86 +183,116 @@ class SQuIDRoot1(QuamRoot):
         wiring: OPXWiring,
         network: OPXNetwork,
         information: Information,
-        resonator_frequencies_bare: Sequence[float] = None,
-        resonator_frequencies_coupled: Sequence[float] = None,
-        qubit_frequencies: Sequence[float] = None,
-        drive_lo_frequencies: Sequence[float] = None,
-        readout_lo_frequency: float = None,
+        resonator_frequencies_bare: Optional[dict[str, float]] = None,
+        resonator_frequencies_coupled: Optional[dict[str, float]] = None,
+        qubit_frequencies: Optional[dict[str, float]] = None,
+        drive_lo_frequencies: Optional[dict[str, float]] = None,
+        readout_lo_frequency: float = 6e9,
         gate_length: int = 40,
         pi_pulse_amplitude: float = 0.4,
         readout_length: int = 1000,
         readout_amplitude: float = 0.1,
     ) -> "SQuIDRoot1":
-        """Generate an empty QuAM object with a given number of qubits.
+        """Generate an empty QuAM object from wiring, network and information.
 
         Args:
-            n_qubits (int): The number of qubits to generate.
 
         Returns:
             QuAM: An empty QuAM object.
         """
 
+        if len(wiring.feed_lines) != 1:
+            raise ValueError(
+                f"Single feedline wiring required for this method. Found {len(wiring.feed_lines)} feedlines, [{', '.join(wiring.feed_lines.keys())}]"
+            )
+        feedline = next(iter(wiring.feed_lines.values()))
+
         machine = SQuIDRoot1(wiring=wiring, network=network, information=information)
 
-        octaves = {
-            "octave1": OctaveSQuID(
-                ip=machine.network.octave_networks["octave1"].get_reference(
-                    "octave_host"
-                ),
-                port=machine.network.octave_networks["octave1"].get_reference(
-                    "octave_port"
-                ),
-            )
-        }
-        machine.octaves = octaves
+        # Set up octave
+        octave = OctaveSQuID(
+            ip=machine.network.octave_networks["octave1"].get_reference("octave_host"),
+            port=machine.network.octave_networks["octave1"].get_reference(
+                "octave_port"
+            ),
+            calibration_db_path=machine.information.get_reference(
+                "calibration_db_path"
+            ),
+        )
+        machine.octaves = {"octave1": octave}
 
         readout_up_converter = OctaveUpConverterSQuID(LO_frequency=readout_lo_frequency)
-        octaves["octave1"].RF_outputs[1] = readout_up_converter
+        octave.RF_outputs[feedline.default_octave_port_in()] = readout_up_converter
 
         readout_down_converter = OctaveDownConverterSQuID(
             LO_frequency=readout_up_converter.get_reference("LO_frequency"),
         )
-        octaves["octave1"].RF_inputs[1] = readout_down_converter
+        octave.RF_inputs[feedline.default_octave_port_out()] = readout_down_converter
 
+        # Set up qubits
         qubit_names = machine.wiring.drive_lines.keys()
 
-        machine.shared_qubit_parameters = {
-            "drag_gaussian_pulse_parameters": {
-                "length": gate_length,
-                "subtracted": True,
-                "sigma_to_length_ratio": 0.2,
-            },
-        }
+        if resonator_frequencies_bare is None:
+            resonator_frequencies_bare = {
+                qubit_name: readout_lo_frequency for qubit_name in qubit_names
+            }
 
-        for idx, qubit_name in enumerate(qubit_names):
+        if resonator_frequencies_coupled is None:
+            resonator_frequencies_coupled = {
+                qubit_name: readout_lo_frequency for qubit_name in qubit_names
+            }
+
+        if drive_lo_frequencies is None:
+            drive_lo_frequencies = {
+                qubit_name: readout_lo_frequency for qubit_name in qubit_names
+            }
+
+        if qubit_frequencies is None:
+            qubit_frequencies = drive_lo_frequencies
+
+        machine.shared_qubit_parameters = QuamDict(
+            {
+                "drag_gaussian_pulse_parameters": {
+                    "length": gate_length,
+                    "subtracted": True,
+                    "sigma_to_length_ratio": 0.2,
+                },
+            }
+        )
+
+        for qubit_name in qubit_names:
             # Add driving frequency converter
             drive_up_converter = OctaveUpConverterSQuID(
-                LO_frequency=drive_lo_frequencies
+                LO_frequency=drive_lo_frequencies[qubit_name]
             )
-            octaves["octave1"].RF_outputs[idx + 2] = drive_up_converter
+            octave.RF_outputs[wiring.drive_lines[qubit_name].default_octave_port()] = (
+                drive_up_converter
+            )
 
             # Add qubit
             qubit = ScQubit(
                 xy=IQChannel(
-                    opx_output_I=f"#/wiring/drive_lines/{qubit_name}/port_I",
-                    opx_output_Q=f"#/wiring/drive_lines/{qubit_name}/port_Q",
+                    opx_output_I=wiring.drive_lines[qubit_name].get_reference("port_I"),
+                    opx_output_Q=wiring.drive_lines[qubit_name].get_reference("port_Q"),
                     frequency_converter_up=drive_up_converter.get_reference(),
-                    intermediate_frequency="#/inferred_intermediate_frequency",
-                    RF_frequency=qubit_frequencies[idx],
+                    intermediate_frequency="#./inferred_intermediate_frequency",
+                    RF_frequency=qubit_frequencies[qubit_name],
                 ),
                 resonator=ReadoutResonator(
                     channel=InOutIQChannel(
-                        opx_input_I=f"#/wiring/feed_lines/feedline/input_I",
-                        opx_input_Q=f"#/wiring/feed_lines/feedline/input_Q",
-                        opx_output_I=f"#/wiring/feed_lines/feedline/output_I",
-                        opx_output_Q=f"#/wiring/feed_lines/feedline/output_Q",
+                        opx_input_I=feedline.get_reference("input_I"),
+                        opx_input_Q=feedline.get_reference("input_Q"),
+                        opx_output_I=feedline.get_reference("output_I"),
+                        opx_output_Q=feedline.get_reference("output_Q"),
                         frequency_converter_up=readout_up_converter.get_reference(),
                         frequency_converter_down=readout_down_converter.get_reference(),
+                        intermediate_frequency="#./inferred_intermediate_frequency",
+                        RF_frequency=resonator_frequencies_coupled[qubit_name],
                     ),
-                    frequency_bare=resonator_frequencies_bare[idx],
-                    frequency_q0=resonator_frequencies_coupled[idx],
+                    frequency_bare=resonator_frequencies_bare[qubit_name],
+                    frequency_q0=resonator_frequencies_coupled[qubit_name],
                 ),
-                transition_frequencies=[qubit_frequencies[idx]],
+                transition_frequencies=[qubit_frequencies[qubit_name]],
             )
 
             qubit.pulse_sets = {

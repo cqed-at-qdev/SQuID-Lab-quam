@@ -19,8 +19,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
 
     - name: Set up Python 3.10
       uses: actions/setup-python@v3
@@ -41,30 +39,6 @@ jobs:
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
-    - name: Run pytest and capture output
-      id: pytest
+    - name: Test with pytest
       run: |
-        pytest_output=$(pytest --tb=no)
-        echo "::set-output name=result::$pytest_output"
-
-    - name: Calculate Success Percentage and Update README
-      run: |
-        pytest_output="${{ steps.pytest.outputs.result }}"
-        echo "Pytest Output: $pytest_output"
-        passed=$(echo "$pytest_output" | grep -oP '\d+ passed' | grep -oP '\d+')
-        failed=$(echo "$pytest_output" | grep -oP '\d+ failed' | grep -oP '\d+' || echo "0")
-        echo "Passed: $passed, Failed: $failed"
-        total_tests=$((passed + failed))
-        if [ "$total_tests" -eq 0 ]; then
-          echo "No tests were found."
-          exit 0
-        fi
-        success_rate=$(echo "scale=2; $passed / $total_tests * 100" | bc)
-        
-        echo "## Test Status" > README.md
-        echo "Success rate: $success_rate%" >> README.md
-        git config --global user.name 'github-actions'
-        git config --global user.email 'github-actions@github.com'
-        git add README.md
-        git diff --staged --quiet || git commit -m "Update README with test success rate"
-        git push || echo "No changes to push."
+        pytest

@@ -1,9 +1,13 @@
 # SQuID Lab QuAM
 
+
+
 <p align="center">
+  <img src="https://img.shields.io/static/v1?style=for-the-badge&label=code-status&message=Mid&color=yellow"/>
   <img src="https://img.shields.io/static/v1?style=for-the-badge&label=initial-commit&message=Jacob Hastrup&color=inactive"/>
   <img src="https://img.shields.io/static/v1?style=for-the-badge&label=maintainer&message=Jacob Hastrup&color=inactive"/>
 </p>
+
 
 ## Introduction
 
@@ -28,7 +32,6 @@ Ensure you have 3.8 ≤ Python ≤ 3.11 installed to use this package.
 #### Octave
 
 ### Building QuAM
-
 
 ## Support
 

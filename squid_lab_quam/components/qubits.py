@@ -14,7 +14,7 @@ from squid_lab_quam.components.information import QuamMetadata
 from squid_lab_quam.components.pulse_sets import PulseSet
 from squid_lab_quam.components.resonators import ReadoutResonator
 from squid_lab_quam.quam_macros.qubit_macros import reset_qubit
-from squid_lab_quam.utils import key_from_parent_dict
+from squid_lab_quam.utils.name_from_parent import key_from_parent_dict
 
 __all__ = ["ScQubit", "FluxtunebleTransmon"]
 

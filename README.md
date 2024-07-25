@@ -4,8 +4,8 @@
 
 <p align="center">
   <img src="https://img.shields.io/static/v1?style=for-the-badge&label=code-status&message=Mid&color=yellow"/>
-  <img src="https://img.shields.io/static/v1?style=for-the-badge&label=initial-commit&message=Jacob Hastrup&color=inactive"/>
-  <img src="https://img.shields.io/static/v1?style=for-the-badge&label=maintainer&message=Jacob Hastrup&color=inactive"/>
+  <img src="https://img.shields.io/static/v1?style=for-the-badge&label=initial-commit&message=Jacob_Hastrup&color=inactive"/>
+  <img src="https://img.shields.io/static/v1?style=for-the-badge&label=maintainer&message=Jacob_Hastrup&color=inactive"/>
 </p>
 
 

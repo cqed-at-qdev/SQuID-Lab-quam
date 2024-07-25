@@ -5,7 +5,7 @@ from quam.components.channels import IQChannel
 from quam.components.octave import Octave, OctaveDownConverter, OctaveUpConverter
 from quam.core import quam_dataclass
 
-from squid_lab_quam.utils import key_from_parent_dict
+from squid_lab_quam.utils.name_from_parent import key_from_parent_dict
 
 
 @quam_dataclass

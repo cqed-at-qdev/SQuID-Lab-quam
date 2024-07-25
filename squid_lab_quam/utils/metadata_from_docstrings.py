@@ -248,4 +248,3 @@ if __name__ == "__main__":
 
     # Extract metadata from the example docstring
     metadata = get_metadata_from_docstring(docstring_example)
-    metadata

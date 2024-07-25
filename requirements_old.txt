@@ -1,0 +1,3 @@
+qm-qua
+quam @ git+https://github.com/qua-platform/quam.git@035cea17616722f468bce23de07bca433e657134#egg=quam
+numpy

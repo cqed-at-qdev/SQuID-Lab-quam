@@ -19,22 +19,44 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+
     - name: Set up Python 3.10
       uses: actions/setup-python@v3
       with:
         python-version: "3.10"
+
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
         pip install flake8 pytest
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
         pip install -e .
+
     - name: Lint with flake8
       run: |
         # stop the build if there are Python syntax errors or undefined names
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-    - name: Test with pytest
+
+    - name: Run pytest and capture output
+      id: pytest
       run: |
-        pytest
+        pytest_output=$(pytest --tb=no | tee /dev/tty)
+        echo "::set-output name=result::$pytest_output"
+
+    - name: Calculate Success Percentage and Update README
+      run: |
+        pytest_output="${{ steps.pytest.outputs.result }}"
+        passed=$(echo "$pytest_output" | grep -oP '\d+ passed' | grep -oP '\d+')
+        failed=$(echo "$pytest_output" | grep -oP '\d+ failed' | grep -oP '\d+' || echo "0")
+        total_tests=$((passed + failed))
+        success_rate=$(echo "scale=2; $passed / $total_tests * 100" | bc)
+        
+        echo "## Test Status" > README.md
+        echo "Success rate: $success_rate%" >> README.md
+        git config --global user.name 'github-actions'
+        git config --global user.email 'github-actions@github.com'
+        git add README.md
+        git commit -m "Update README with test success rate"
+        git push

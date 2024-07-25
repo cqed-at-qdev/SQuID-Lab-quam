@@ -6,8 +6,8 @@ from quam.components.channels import Channel
 from quam.components.pulses import Pulse
 from quam.core import QuamComponent, quam_dataclass
 
-from squid_lab_quam.components.information import QuamMetadata
-from squid_lab_quam.utils.name_from_parent import key_from_parent_dict
+from quam_squid_lab.components.information import QuamMetadata
+from quam_squid_lab.utils.name_from_parent import key_from_parent_dict
 
 
 @quam_dataclass

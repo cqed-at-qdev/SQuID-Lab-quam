@@ -1,9 +1,9 @@
 import pytest
 
-from squid_lab_quam.components.qubits import ScQubit
-from squid_lab_quam.components.resonators import ReadoutResonator
-from squid_lab_quam.components.roots import SQuIDRoot1
-from squid_lab_quam.utils.name_from_parent import (
+from quam_squid_lab.components.qubits import ScQubit
+from quam_squid_lab.components.resonators import ReadoutResonator
+from quam_squid_lab.components.roots import SQuIDRoot1
+from quam_squid_lab.utils.name_from_parent import (
     get_name_from_parent,
     index_from_parent_list,
     key_from_parent_dict,

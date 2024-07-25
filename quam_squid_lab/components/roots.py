@@ -10,20 +10,20 @@ from quam.components.channels import InOutIQChannel, IQChannel
 from quam.components.pulses import SquareReadoutPulse
 from quam.core import QuamDict, QuamRoot, quam_dataclass
 
-from squid_lab_quam.components.information import Information
-from squid_lab_quam.components.network import OPXNetwork
-from squid_lab_quam.components.octave import (
+from quam_squid_lab.components.information import Information
+from quam_squid_lab.components.network import OPXNetwork
+from quam_squid_lab.components.octave import (
     OctaveDownConverterSQuID,
     OctaveSQuID,
     OctaveUpConverterSQuID,
 )
-from squid_lab_quam.components.pulse_sets import (
+from quam_squid_lab.components.pulse_sets import (
     PulseSetDragGaussian,
     PulseSetFlattopCosine,
 )
-from squid_lab_quam.components.qubits import ScQubit
-from squid_lab_quam.components.resonators import ReadoutResonator
-from squid_lab_quam.components.wiring import OPXWiring
+from quam_squid_lab.components.qubits import ScQubit
+from quam_squid_lab.components.resonators import ReadoutResonator
+from quam_squid_lab.components.wiring import OPXWiring
 
 __all__ = ["SQuIDRoot1"]
 

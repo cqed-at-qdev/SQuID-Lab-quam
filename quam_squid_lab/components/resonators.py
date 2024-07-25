@@ -6,7 +6,7 @@ from qm.qua._expressions import QuaVariableType
 from quam.components.channels import InOutIQChannel
 from quam.core import QuamComponent, quam_dataclass
 
-from squid_lab_quam.components.information import QuamMetadata
+from quam_squid_lab.components.information import QuamMetadata
 
 __all__ = ["ReadoutResonator"]
 

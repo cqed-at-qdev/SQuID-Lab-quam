@@ -1,6 +1,6 @@
 import pytest
 
-from squid_lab_quam.components.information import Information
+from quam_squid_lab.components.information import Information
 
 
 def test_information_initialization():

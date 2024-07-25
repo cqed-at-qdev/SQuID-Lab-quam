@@ -2,10 +2,10 @@ import pytest
 from quam.components.channels import IQChannel
 from quam.components.hardware import Mixer
 
-from squid_lab_quam.components.information import Information
-from squid_lab_quam.components.network import OPXNetwork
-from squid_lab_quam.components.qubits import ScQubit
-from squid_lab_quam.components.roots import SQuIDRoot1
+from quam_squid_lab.components.information import Information
+from quam_squid_lab.components.network import OPXNetwork
+from quam_squid_lab.components.qubits import ScQubit
+from quam_squid_lab.components.roots import SQuIDRoot1
 
 
 def test_SQuIDRoot1_initialization():

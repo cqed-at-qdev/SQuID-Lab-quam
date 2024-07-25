@@ -1,4 +1,4 @@
-from squid_lab_quam.components.network import OctaveNetwork, OPXNetwork
+from quam_squid_lab.components.network import OctaveNetwork, OPXNetwork
 
 
 def test_defualt_OctaveNetwork():

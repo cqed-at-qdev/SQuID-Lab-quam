@@ -1,1 +1,0 @@
-quam@ git+https://github.com/qua-platform/quam.git@d933af3b2434cdbe595fa980bc0295491aa5f83c

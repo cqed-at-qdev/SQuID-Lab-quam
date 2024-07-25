@@ -225,7 +225,7 @@ def bold_font(text: str) -> str:
 
 
 if __name__ == "__main__":
-    from squid_lab_quam.components.roots import SQuIDRoot1
+    from quam_squid_lab.components.roots import SQuIDRoot1
 
     quam = SQuIDRoot1()
     quam.information = Information(

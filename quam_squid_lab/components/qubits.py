@@ -9,12 +9,12 @@ from quam.components.channels import IQChannel
 from quam.components.octave import OctaveUpConverter
 from quam.core import QuamComponent, quam_dataclass
 
-from squid_lab_quam.components.flux_line import FluxLine
-from squid_lab_quam.components.information import QuamMetadata
-from squid_lab_quam.components.pulse_sets import PulseSet
-from squid_lab_quam.components.resonators import ReadoutResonator
-from squid_lab_quam.quam_macros.qubit_macros import reset_qubit
-from squid_lab_quam.utils.name_from_parent import key_from_parent_dict
+from quam_squid_lab.components.flux_line import FluxLine
+from quam_squid_lab.components.information import QuamMetadata
+from quam_squid_lab.components.pulse_sets import PulseSet
+from quam_squid_lab.components.resonators import ReadoutResonator
+from quam_squid_lab.quam_macros.qubit_macros import reset_qubit
+from quam_squid_lab.utils.name_from_parent import key_from_parent_dict
 
 __all__ = ["ScQubit", "FluxtunebleTransmon"]
 

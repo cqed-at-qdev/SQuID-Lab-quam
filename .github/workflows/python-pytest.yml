@@ -42,7 +42,7 @@ jobs:
     - name: Run pytest and capture output
       id: pytest
       run: |
-        pytest_output=$(pytest --tb=no | tee /dev/tty)
+        pytest_output=$(pytest --tb=no)
         echo "::set-output name=result::$pytest_output"
 
     - name: Calculate Success Percentage and Update README
